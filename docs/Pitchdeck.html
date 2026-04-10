@@ -771,55 +771,45 @@
                     50%     { transform:scale(1.04); }
                 }
                 </style>
-                <!-- SOM card with stacked bar chart -->
+                <!-- SOM card with bar chart -->
                 <div class="market-card amber-top reveal" style="padding-bottom:clamp(.3rem,.6vw,.5rem);">
-                    <div class="market-label" style="margin-bottom:.2em;">SOM — 5 Years Revenue</div>
+                    <div class="market-label" style="margin-bottom:.2em;">SOM — Product Revenue</div>
                     <!-- Legend -->
                     <div style="display:flex;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
                         <div style="display:flex;align-items:center;gap:3px;font-size:6.5px;color:#64748b;font-family:'Be Vietnam Pro',sans-serif;">
-                            <div style="width:8px;height:8px;border-radius:2px;background:#d97706;"></div>SaaS ARR
-                        </div>
-                        <div style="display:flex;align-items:center;gap:3px;font-size:6.5px;color:#64748b;font-family:'Be Vietnam Pro',sans-serif;">
-                            <div style="width:8px;height:8px;border-radius:2px;background:#16a34a;"></div>Financial Layer
+                            <div style="width:8px;height:8px;border-radius:2px;background:#d97706;"></div>SaaS + HW + Consumables
                         </div>
                     </div>
                     <!--
-                        Scale: max = 49.8+30 = ~80 tỷ → 50px height → 1tỷ = 0.625px
+                        SOM = Revenue - Outsourcing (SaaS+Hardware+Consumables only)
+                        Y1: 0.6 tỷ  Y2: 6.8 tỷ  Y3: 17.7 tỷ  Y4: 44.5 tỷ  Y5: 89.5 tỷ
+                        Scale: max=89.5 tỷ → 50px, 1tỷ=0.559px
                         Bar bottom y=63, bar area 50px (y=13..63)
-                        Y1: SaaS=1.6→1px  Y2: SaaS=5.3→3px  Y3: SaaS=12.2→8px
-                        Y4: SaaS=27.1→17px + Finance=10→6px = 23px total
-                        Y5: SaaS=49.8→31px + Finance=30→19px = 50px total
+                        Y1: 0.6→1px  Y2: 6.8→4px  Y3: 17.7→10px  Y4: 44.5→25px  Y5: 89.5→50px
                     -->
                     <svg viewBox="0 0 260 100" preserveAspectRatio="xMidYMid meet" style="width:100%;display:block;">
-                        <!-- Y1 — SaaS only -->
+                        <!-- Y1 -->
                         <rect x="10" y="62" width="36" height="1" rx="1" fill="#d97706"/>
-                        <!-- Y2 — SaaS only -->
-                        <rect x="58" y="60" width="36" height="3" rx="1" fill="#d97706" opacity=".75"/>
-                        <!-- Y3 — SaaS only -->
-                        <rect x="106" y="55" width="36" height="8" rx="2" fill="#d97706" opacity=".85"/>
-                        <!-- Y4 — SaaS bottom + Finance top -->
-                        <rect x="154" y="46" width="36" height="17" rx="2" fill="#d97706" opacity=".9"/>
-                        <rect x="154" y="40" width="36" height="6" rx="2" fill="#16a34a" opacity=".9"/>
-                        <!-- Y5 — SaaS bottom + Finance top -->
-                        <rect x="202" y="32" width="36" height="31" rx="2" fill="#d97706"/>
-                        <rect x="202" y="13" width="36" height="19" rx="2" fill="#16a34a"/>
-                        <!-- Finance layer label arrow Y4 -->
-                        <line x1="172" y1="40" x2="172" y2="37" stroke="#16a34a" stroke-width="1" stroke-dasharray="2,1"/>
-                        <text x="172" y="35" text-anchor="middle" font-size="6" fill="#16a34a" font-weight="700" font-family="Be Vietnam Pro">+10</text>
-                        <!-- Values on top of full bar -->
-                        <text x="28" y="58" text-anchor="middle" font-size="7" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">1.6</text>
-                        <text x="76" y="56" text-anchor="middle" font-size="7" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">5.3</text>
-                        <text x="124" y="51" text-anchor="middle" font-size="7" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">12.2</text>
-                        <text x="172" y="27" text-anchor="middle" font-size="7.5" fill="#0f172a" font-weight="800" font-family="Be Vietnam Pro">37.1</text>
-                        <text x="220" y="9" text-anchor="middle" font-size="8" fill="#0f172a" font-weight="900" font-family="Be Vietnam Pro">79.8 tỷ₫</text>
-                        <!-- "Finance" badge Y5 -->
-                        <text x="220" y="24" text-anchor="middle" font-size="6" fill="#16a34a" font-weight="700" font-family="Be Vietnam Pro">+30 Finance</text>
+                        <!-- Y2 -->
+                        <rect x="58" y="59" width="36" height="4" rx="1" fill="#d97706" opacity=".75"/>
+                        <!-- Y3 -->
+                        <rect x="106" y="53" width="36" height="10" rx="2" fill="#d97706" opacity=".85"/>
+                        <!-- Y4 -->
+                        <rect x="154" y="38" width="36" height="25" rx="2" fill="#d97706" opacity=".9"/>
+                        <!-- Y5 -->
+                        <rect x="202" y="13" width="36" height="50" rx="2" fill="#d97706"/>
+                        <!-- Values on top of bars -->
+                        <text x="28" y="58" text-anchor="middle" font-size="7" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">0.6</text>
+                        <text x="76" y="55" text-anchor="middle" font-size="7" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">6.8</text>
+                        <text x="124" y="49" text-anchor="middle" font-size="7" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">17.7</text>
+                        <text x="172" y="34" text-anchor="middle" font-size="7.5" fill="#0f172a" font-weight="800" font-family="Be Vietnam Pro">44.5</text>
+                        <text x="220" y="9" text-anchor="middle" font-size="8" fill="#0f172a" font-weight="900" font-family="Be Vietnam Pro">89.5 tỷ₫</text>
                         <!-- Year labels -->
                         <text x="28" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y1</text>
                         <text x="76" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y2</text>
                         <text x="124" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y3</text>
-                        <text x="172" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y4 🏦</text>
-                        <text x="220" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y5 🏦</text>
+                        <text x="172" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y4</text>
+                        <text x="220" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y5</text>
                         <!-- KH count -->
                         <text x="28" y="83" text-anchor="middle" font-size="6" fill="#94a3b8" font-family="Be Vietnam Pro">68 KH</text>
                         <text x="76" y="83" text-anchor="middle" font-size="6" fill="#94a3b8" font-family="Be Vietnam Pro">379</text>
@@ -1053,7 +1043,7 @@
                             <div style="font-size:var(--label-size);color:var(--muted);">Churn/năm</div>
                         </div>
                         <div style="flex:1;background:#f5f3ff;border:1px solid rgba(124,58,237,.2);border-radius:4px;padding:clamp(.4rem,.7vw,.6rem);text-align:center;min-width:80px;">
-                            <div style="font-size:clamp(1rem,2vw,1.5rem);font-weight:900;color:#7c3aed;">Y2</div>
+                            <div style="font-size:clamp(1rem,2vw,1.5rem);font-weight:900;color:#7c3aed;">Y3</div>
                             <div style="font-size:var(--label-size);color:var(--muted);">Breakeven</div>
                         </div>
                     </div>
@@ -1468,7 +1458,7 @@
                 <div class="ask-left stagger">
                     <div class="ask-box reveal">
                         <div class="ask-amount">1.5<span class="unit"> tỷ VNĐ</span></div>
-                        <div class="ask-label">Seed Round · Valuation 15 tỷ · Max 10% equity · Bonus 30%</div>
+                        <div class="ask-label">Seed Round · Valuation 15 tỷ · Max 10% equity · Bonus 10%</div>
                     </div>
 
                     <div class="use-list stagger">
@@ -1513,7 +1503,7 @@
                         <div style="display:flex;flex-direction:column;gap:0.4em;margin-top:0.5em">
                             <div style="font-size:var(--body-size);color:#4a3800;line-height:1.5">✓ 68 paying customers trong Y1</div>
                             <div style="font-size:var(--body-size);color:#4a3800;line-height:1.5">✓ MRR 132M₫ cuối Y1 2026</div>
-                            <div style="font-size:var(--body-size);color:#4a3800;line-height:1.5">✓ Breakeven đầu Y2 (có outsourcing safety net)</div>
+                            <div style="font-size:var(--body-size);color:#4a3800;line-height:1.5">✓ Breakeven Y3 2028 — năm đầu tiên có lợi nhuận dương</div>
                         </div>
                     </div>
 
