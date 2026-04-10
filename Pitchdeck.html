@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP Kim Loại Quý 4.0 — Investor Deck</title>
+
+    <!-- Be Vietnam Pro: full Vietnamese Unicode, clean & modern -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           INVESTOR DECK THEME
+           Dark navy · Electric blue · Neon green
+           Bold Signal × Electric Studio hybrid
+           =========================================== */
+        :root {
+            --navy:       #FFFDF7;
+            --navy2:      #FFF9E6;
+            --navy3:      #FFF3CC;
+            --blue:       #B8860B;
+            --blue-light: #996B00;
+            --blue-bright:#D4A843;
+            --green:      #16a34a;
+            --green-dim:  #15803d;
+            --amber:      #D4A843;
+            --red:        #dc2626;
+            --white:      #1a1000;
+            --off-white:  #4a3800;
+            --muted:      #8B7355;
+            --border:     rgba(180,130,11,0.15);
+            --card-bg:    #FFFFFF;
+            --card-hover: #FFF9E6;
+
+            --font: 'Be Vietnam Pro', sans-serif;
+
+            /* Typography — large & readable */
+            --title-size:  clamp(3.5rem, 8.5vw, 8rem);
+            --h2-size:     clamp(2.5rem, 5vw, 4.8rem);
+            --h3-size:     clamp(1.2rem, 1.8vw, 1.8rem);
+            --stat-size:   clamp(3rem, 6vw, 6rem);
+            --body-size:   clamp(0.95rem, 1.4vw, 1.35rem);
+            --small-size:  clamp(0.8rem, 1.05vw, 1.05rem);
+            --label-size:  clamp(0.68rem, 0.82vw, 0.85rem);
+
+            /* Spacing */
+            --pad:  clamp(2.5rem, 5vw, 5rem);
+            --gap:  clamp(0.8rem, 1.5vw, 1.6rem);
+            --egap: clamp(0.4rem, 0.8vw, 0.9rem);
+
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        html, body { height:100%; overflow-x:hidden; }
+        html { scroll-snap-type:y mandatory; scroll-behavior:smooth; }
+        body { font-family:var(--font); background:#FFFDF7; color:#1a1000; -webkit-font-smoothing:antialiased; }
+
+        .slide { background:#FFFDF7; }
+
+        /* === VIEWPORT BASE === */
+        .slide {
+            width:100vw; height:100vh; height:100dvh;
+            overflow:hidden; scroll-snap-align:start;
+            display:flex; flex-direction:column;
+            align-items:center; justify-content:center;
+            position:relative; background:#FFFDF7;
+        }
+
+        .slide-content {
+            display:flex; flex-direction:column;
+            justify-content:center; align-items:stretch;
+            max-height:100%; max-width:100%; overflow:hidden;
+            padding:var(--pad); width:100%;
+        }
+
+
+        img { max-width:100%; max-height:min(50vh,400px); object-fit:contain; }
+
+        /* === MOBILE RESPONSIVE === */
+
+        /* Tablet */
+        @media (max-width:768px) {
+            :root { --pad:clamp(1rem,3vw,2rem); --gap:clamp(0.5rem,1.5vw,1rem); --title-size:clamp(2rem,7vw,3rem); --h2-size:clamp(1.4rem,5vw,2.2rem); --h3-size:clamp(0.9rem,2.5vw,1.3rem); --body-size:clamp(0.8rem,2.2vw,1rem); --small-size:clamp(0.7rem,1.8vw,0.85rem); --label-size:clamp(0.6rem,1.5vw,0.75rem); --stat-size:clamp(2rem,6vw,3rem); }
+            /* Slide 1 cover: stack vertically, full overlay */
+            .slide-1 { flex-direction:column!important; }
+            .s1-content { width:100%!important; padding:var(--pad)!important; justify-content:center!important; align-items:flex-start; }
+            .s1-title { font-size:clamp(2rem,10vw,3.5rem)!important; }
+            .s1-sub { font-size:var(--body-size)!important; }
+            .s1-stats { flex-wrap:wrap; gap:clamp(.8rem,3vw,1.5rem); }
+            .s1-stat-num { font-size:clamp(1.3rem,5vw,2rem)!important; }
+            .s1-stat-div { display:none; }
+            .slide-1-bg::after { background:linear-gradient(180deg, rgba(244,247,255,0.97) 0%, rgba(244,247,255,0.92) 60%, rgba(244,247,255,0.7) 100%)!important; }
+            .market-grid, .product-grid { grid-template-columns:1fr!important; }
+            .problem-cols, .bm-grid, .traction-cols, .ask-grid { grid-template-columns:1fr!important; }
+        }
+
+        /* Mobile phone */
+        @media (max-width:768px) {
+            .slide-content { justify-content:center; align-items:center; text-align:center; }
+            .slide-content > * { width:100%; }
+            .problem-cols, .traction-cols, .bm-grid, .ask-grid { text-align:left; }
+            .problem-item, .why-item, .proof-card, .roadmap-item, .bm-tier, .use-item { text-align:left; }
+        }
+        @media (max-width:480px) {
+            :root { --pad:clamp(0.8rem,4vw,1.5rem); --gap:clamp(0.4rem,2vw,0.8rem); --title-size:clamp(1.8rem,8vw,2.5rem); --h2-size:clamp(1.2rem,6vw,1.8rem); --h3-size:clamp(0.85rem,3vw,1.1rem); --body-size:clamp(0.75rem,2.8vw,0.95rem); --stat-size:clamp(1.5rem,8vw,2.5rem); }
+            .nav-dots { display:none; }
+            .slide-label { font-size:9px; }
+            .slide-nav { font-size:clamp(8px,2vw,10px)!important; top:clamp(.3rem,1vw,.6rem)!important; left:50%!important; right:auto!important; transform:translateX(-50%)!important; gap:.3em!important; padding:2px 8px!important; background:rgba(255,253,247,.95)!important; border-radius:4px!important; }
+            .slide-nav .nav-divider { height:8px; }
+            .nav-dots { display:none!important; }
+            .chip { font-size:9px; padding:0.25em 0.6em; }
+            .market-card, .product-card, .bm-tier, .proof-card, .why-item, .problem-item, .roadmap-item, .use-item, .team-card { padding:clamp(0.5rem,2vw,0.8rem)!important; }
+            .s1-title { font-size:clamp(1.8rem,10vw,3rem)!important; }
+            .s1-content { padding:var(--pad)!important; }
+            .moat-bar, .market-insight { font-size:var(--small-size); padding:clamp(0.5rem,2vw,0.8rem)!important; }
+            .bm-tier-price { font-size:clamp(1rem,4vw,1.5rem); }
+            .ask-amount { font-size:clamp(2rem,8vw,3.5rem); }
+            .use-pct { font-size:clamp(1rem,4vw,1.5rem); min-width:40px; }
+        }
+
+        /* === SLIDE 2 — MOBILE OVERFLOW FIX === */
+        @media (max-width:768px) {
+            /* Cho slide cao hơn 100dvh và scroll được thay vì bị clip */
+            #slide-2 {
+                height:auto; min-height:100dvh;
+                overflow-y:auto; overflow-x:hidden;
+                justify-content:flex-start;
+                /* Tắt scroll-snap để slide con có thể scroll nội bộ */
+                scroll-snap-align:none;
+            }
+            /* Gỡ clip của slide-content — đây là root cause bị cut top/bottom */
+            #slide-2 .slide-content {
+                overflow:visible; max-height:none;
+                justify-content:flex-start;
+                padding-top:clamp(2.5rem,7vw,3.5rem);
+                padding-bottom:clamp(2rem,6vw,3rem);
+            }
+            /* Market grid compact */
+            #slide-2 .market-grid { gap:clamp(0.4rem,1.5vw,0.7rem); margin-bottom:clamp(0.5rem,1.5vw,0.7rem); }
+            #slide-2 .market-card { padding:clamp(0.5rem,2vw,0.9rem)!important; }
+            /* Giới hạn chiều cao SVG trong card — tránh render quá to khi full-width */
+            #slide-2 .market-card svg { max-height:70px; }
+            #slide-2 .market-card svg[viewBox="0 0 160 160"] { max-height:90px; }
+            /* Ẩn bottom row (pie + compliance) — giữ lại 3 cards chính */
+            #slide-2 .s2-bottom-row { display:none!important; }
+        }
+
+        /* Short screens */
+        @media (max-height:700px) {
+            :root { --pad:clamp(1rem,2.5vw,2rem); --gap:clamp(0.5rem,1vw,0.8rem); --title-size:clamp(1.8rem,4.5vw,3rem); --h2-size:clamp(1.3rem,3vw,2rem); --stat-size:clamp(1.5rem,3.5vw,2.5rem); }
+            .nav-dots { display:none; }
+        }
+        @media (max-height:500px) {
+            :root { --pad:clamp(0.5rem,2vw,1rem); --title-size:clamp(1.2rem,3.5vw,1.8rem); --body-size:clamp(0.65rem,1.5vw,0.85rem); }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            *,*::before,*::after { animation-duration:0.01ms!important; transition-duration:0.2s!important; }
+            html { scroll-behavior:auto; }
+        }
+
+        /* === BACKGROUND ATMOSPHERE === */
+        .slide::before {
+            content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+            background:
+                radial-gradient(ellipse 90% 70% at 100% 0%, rgba(212,168,67,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 70% 60% at 0% 100%, rgba(184,134,11,0.05) 0%, transparent 50%),
+                var(--navy);
+        }
+
+        .slide::after {
+            content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+            background-image:
+                linear-gradient(rgba(184,134,11,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(184,134,11,0.05) 1px, transparent 1px);
+            background-size:64px 64px;
+        }
+
+        .slide-content, .slide > *:not(.slide-bg) { position:relative; z-index:1; }
+
+        /* === ANIMATIONS === */
+        .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+        .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+        .reveal-scale { opacity:0; transform:scale(0.93); transition:opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+        .slide.visible .reveal, .slide.visible .reveal-left, .slide.visible .reveal-scale { opacity:1; transform:none; }
+
+        .stagger > *:nth-child(1) { transition-delay:0.05s; }
+        .stagger > *:nth-child(2) { transition-delay:0.15s; }
+        .stagger > *:nth-child(3) { transition-delay:0.25s; }
+        .stagger > *:nth-child(4) { transition-delay:0.35s; }
+        .stagger > *:nth-child(5) { transition-delay:0.45s; }
+        .stagger > *:nth-child(6) { transition-delay:0.55s; }
+        .stagger > *:nth-child(7) { transition-delay:0.65s; }
+
+        /* === SHARED COMPONENTS === */
+        .chip {
+            display:inline-flex; align-items:center; gap:0.4em;
+            padding:0.3em 0.9em;
+            background:rgba(184,134,11,0.08);
+            border:1px solid rgba(184,134,11,0.2);
+            border-radius:3px;
+            font-size:var(--label-size); font-weight:600;
+            color:#996B00; letter-spacing:0.1em; text-transform:uppercase;
+        }
+        .chip.green { background:rgba(22,163,74,0.08); border-color:rgba(22,163,74,0.2); color:var(--green); }
+        .chip.amber { background:rgba(212,168,67,0.1); border-color:rgba(212,168,67,0.2); color:var(--amber); }
+
+        .slide-label { display:none; }
+        .slide-number { display:none; }
+
+        .slide-nav {
+            position:fixed; bottom:clamp(.6rem,1.5vw,1.2rem); left:50%; transform:translateX(-50%);
+            display:flex; align-items:center; gap:.6em;
+            font-size:var(--label-size); font-weight:500;
+            color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; z-index:10;
+            white-space:nowrap;
+        }
+        .slide-nav .nav-title { font-weight:600; }
+        .slide-nav .nav-divider { width:1px; height:12px; background:rgba(184,134,11,0.2); }
+        .slide-nav .nav-num { font-weight:700; opacity:.6; }
+
+        /* === SLIDE 1 — COVER === */
+        .slide-1 { flex-direction:row; }
+
+        .slide-1-bg {
+            position:absolute; inset:0; z-index:0;
+            background-image: url('https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=1920&q=85&auto=format&fit=crop');
+            background-size:cover; background-position:center;
+        }
+        .slide-1-bg::after {
+            content:''; position:absolute; inset:0;
+            background: linear-gradient(105deg, rgba(244,247,255,0.97) 42%, rgba(244,247,255,0.82) 65%, rgba(244,247,255,0.3) 100%);
+        }
+
+        .s1-content {
+            position:relative; z-index:2;
+            width:58%;
+            display:flex; flex-direction:column; justify-content:center;
+            padding:var(--pad);
+        }
+
+        .s1-series {
+            display:inline-flex; align-items:center; gap:0.5em;
+            padding:0.4em 1.1em;
+            border:1px solid rgba(34,197,94,0.5);
+            background:rgba(22,163,74,0.06);
+            border-radius:3px;
+            font-size:var(--label-size); font-weight:700;
+            color:var(--green); letter-spacing:0.12em; text-transform:uppercase;
+            margin-bottom:var(--egap);
+        }
+
+        .s1-title {
+            font-size:var(--title-size); font-weight:900;
+            background: linear-gradient(135deg, #FFD700 0%, #FFF0A0 20%, #DAA520 40%, #FFD700 55%, #FFF8C0 70%, #B8860B 85%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            -webkit-text-stroke: 2px rgba(0,0,0,0.15);
+            filter: drop-shadow(0 3px 0px rgba(0,0,0,0.8)) drop-shadow(0 6px 18px rgba(101,67,0,0.6));
+            line-height:0.93;
+            letter-spacing:-0.03em; margin-bottom:var(--gap);
+        }
+        .s1-title .accent { 
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            -webkit-text-stroke: 0;
+            filter: drop-shadow(0 2px 0px rgba(0,0,0,0.6)) drop-shadow(0 4px 12px rgba(37,99,235,0.4));
+        }
+
+        .s1-sub {
+            font-size:var(--body-size); font-weight:400;
+            color:#4a3800; line-height:1.6;
+            max-width:520px; margin-bottom:var(--gap);
+        }
+
+        .s1-stats {
+            display:flex; gap:var(--gap);
+        }
+        .s1-stat { }
+        .s1-stat-num {
+            font-size:clamp(1.6rem,3.5vw,3rem); font-weight:800;
+            color:var(--white); line-height:1;
+        }
+        .s1-stat-num .unit { font-size:0.5em; font-weight:600; color:var(--blue-light); }
+        .s1-stat-label {
+            font-size:var(--label-size); font-weight:500;
+            color:var(--muted); margin-top:0.2em;
+        }
+        .s1-stat-div {
+            width:1px; background:rgba(184,134,11,0.06);
+            align-self:stretch; margin:0 0.5em;
+        }
+
+        /* === SLIDE 2 — MARKET OPPORTUNITY === */
+        .s2-title, .s3-title, .s4-title, .s5-title, .s6-title, .s7-title {
+            font-size:var(--h2-size); font-weight:800;
+            color:var(--white); line-height:1.05; margin-bottom:var(--gap);
+        }
+        .s2-title .accent { color:var(--blue-light); }
+
+        .market-grid {
+            display:grid; grid-template-columns:repeat(3,1fr);
+            gap:clamp(0.6rem,1.2vw,1.2rem);
+            margin-bottom:var(--gap);
+        }
+
+        .market-card {
+            background:#FFFFFF;
+            border:1px solid rgba(184,134,11,0.12);
+            border-top:3px solid rgba(184,134,11,0.5);
+            padding:clamp(1rem,1.8vw,1.8rem);
+            border-radius:4px;
+        }
+        .market-card.green-top { border-top-color:var(--green); }
+        .market-card.amber-top { border-top-color:var(--amber); }
+
+        .market-stat {
+            font-size:var(--stat-size); font-weight:900;
+            color:var(--white); line-height:1; margin-bottom:0.2em;
+        }
+        .market-stat .unit { font-size:0.45em; font-weight:700; color:var(--blue-light); vertical-align:top; margin-top:0.2em; display:inline-block; }
+        .market-stat.green .unit { color:var(--green); }
+        .market-stat.amber .unit { color:var(--amber); }
+
+        .market-label {
+            font-size:var(--h3-size); font-weight:700;
+            color:#4a3800; margin-bottom:0.3em;
+        }
+
+        .market-desc {
+            font-size:var(--body-size); font-weight:400;
+            color:#4a3800; line-height:1.5;
+        }
+
+        .market-insight {
+            padding:clamp(0.8rem,1.5vw,1.3rem) clamp(1rem,2vw,1.8rem);
+            background:rgba(184,134,11,0.06);
+            border:1px solid rgba(59,130,246,0.25);
+            border-left:3px solid rgba(184,134,11,0.4);
+            border-radius:4px;
+            font-size:var(--body-size); font-weight:500;
+            color:#4a3800; line-height:1.6;
+        }
+        .market-insight strong { color:var(--green); }
+
+        /* === SLIDE 3 — PROBLEM & WHY NOW === */
+        .s3-title .accent { color:var(--amber); }
+
+        .problem-cols { display:grid; grid-template-columns:1fr 1fr; gap:var(--gap); }
+
+        .problem-list {
+            display:flex; flex-direction:column; gap:clamp(0.5rem,0.9vw,1rem);
+        }
+
+        .problem-item {
+            display:flex; align-items:flex-start; gap:0.8em;
+            padding:clamp(0.8rem,1.3vw,1.2rem);
+            background:rgba(220,38,38,0.06);
+            border:1px solid rgba(239,68,68,0.2);
+            border-radius:4px;
+        }
+
+        .problem-item .icon { font-size:clamp(1.3rem,2vw,1.8rem); flex-shrink:0; }
+
+        .problem-item .text { }
+        .problem-item .text strong {
+            display:block; font-size:var(--h3-size); font-weight:700;
+            color:#4a3800; margin-bottom:0.2em;
+        }
+        .problem-item .text span {
+            font-size:var(--body-size); color:#4a3800; line-height:1.4;
+        }
+
+        .why-now {
+            display:flex; flex-direction:column; gap:clamp(0.6rem,1vw,1rem);
+        }
+
+        .why-now-label {
+            font-size:var(--h3-size); font-weight:800;
+            color:var(--green); margin-bottom:0.2em;
+        }
+
+        .why-item {
+            display:flex; align-items:flex-start; gap:0.8em;
+            padding:clamp(0.8rem,1.3vw,1.2rem);
+            background:rgba(22,163,74,0.06);
+            border:1px solid rgba(34,197,94,0.2);
+            border-radius:4px;
+        }
+        .why-item .icon { font-size:clamp(1.3rem,2vw,1.8rem); flex-shrink:0; }
+        .why-item .text strong {
+            display:block; font-size:var(--h3-size); font-weight:700;
+            color:#4a3800; margin-bottom:0.2em;
+        }
+        .why-item .text span {
+            font-size:var(--body-size); color:#15803d; line-height:1.4;
+        }
+
+        /* === SLIDE 4 — PRODUCT & MOAT === */
+        .s4-title .accent { color:var(--blue-light); }
+
+        .product-grid {
+            display:grid; grid-template-columns:repeat(3,1fr);
+            gap:clamp(0.6rem,1.1vw,1rem);
+            margin-bottom:var(--egap);
+        }
+
+        .product-card {
+            background:#FFFFFF;
+            border:1px solid rgba(184,134,11,0.12);
+            padding:clamp(0.9rem,1.5vw,1.5rem);
+            border-radius:4px;
+            transition:background 0.3s, border-color 0.3s, transform 0.2s;
+        }
+        .product-card:hover { background:rgba(184,134,11,0.06); border-color:#2563eb; transform:translateY(-2px); }
+
+        .product-icon { font-size:clamp(1.5rem,2.5vw,2.2rem); margin-bottom:0.4em; display:block; }
+
+        .product-name {
+            font-size:var(--h3-size); font-weight:700;
+            color:var(--blue-light); margin-bottom:0.25em;
+        }
+
+        .product-desc {
+            font-size:var(--body-size); color:#4a3800; line-height:1.5;
+        }
+
+        .moat-bar {
+            padding:clamp(0.8rem,1.3vw,1.2rem) clamp(1rem,2vw,1.8rem);
+            background:rgba(184,134,11,0.08);
+            border:1px solid rgba(184,134,11,0.2);
+            border-radius:4px;
+            font-size:var(--body-size); font-weight:500;
+            color:#4a3800; line-height:1.6;
+            display:flex; align-items:center; gap:1em;
+        }
+        .moat-bar span { color:var(--green); font-weight:700; }
+
+        /* === SLIDE 5 — BUSINESS MODEL === */
+        .s5-title .accent { color:var(--green); }
+
+        .bm-grid { display:grid; grid-template-columns:1fr 1fr; gap:var(--gap); }
+
+        .bm-left { display:flex; flex-direction:column; gap:clamp(0.5rem,0.9vw,1rem); }
+
+        .bm-tier {
+            display:flex; align-items:center; gap:1em;
+            padding:clamp(0.8rem,1.3vw,1.2rem);
+            background:#FFFFFF; border:1px solid rgba(184,134,11,0.12);
+            border-radius:4px;
+        }
+        .bm-tier.highlight { background:rgba(184,134,11,0.08); border-color:#2563eb; }
+
+        .bm-tier-name {
+            font-size:var(--h3-size); font-weight:700;
+            color:#4a3800; min-width:150px;
+        }
+
+        .bm-tier-price {
+            font-size:clamp(1.2rem,2.5vw,2rem); font-weight:800;
+            color:var(--white); white-space:nowrap;
+        }
+
+        .bm-tier-desc {
+            font-size:var(--body-size); color:#4a3800; line-height:1.4;
+        }
+
+        .bm-right { display:flex; flex-direction:column; gap:clamp(0.5rem,0.9vw,1rem); }
+
+        .metric-card {
+            flex:1;
+            background:#FFFFFF; border:1px solid rgba(184,134,11,0.12);
+            border-radius:4px;
+            padding:clamp(0.8rem,1.5vw,1.4rem);
+            display:flex; flex-direction:column; justify-content:center;
+        }
+        .metric-card.green-border { border-color:rgba(22,163,74,0.2); }
+        .metric-card.blue-border { border-color:#2563eb; }
+
+        .metric-num {
+            font-size:clamp(1.5rem,3vw,2.5rem); font-weight:900;
+            color:var(--white); line-height:1; margin-bottom:0.15em;
+        }
+        .metric-num .unit { font-size:0.5em; color:var(--blue-light); }
+        .metric-num.green .unit { color:var(--green); }
+
+        .metric-label {
+            font-size:var(--body-size); font-weight:600;
+            color:#4a3800; margin-bottom:0.15em;
+        }
+
+        .metric-sub { font-size:var(--small-size); color:var(--muted); }
+
+        /* === SLIDE 6 — TRACTION & ROADMAP === */
+        .s6-title .accent { color:var(--green); }
+
+        .traction-cols { display:grid; grid-template-columns:1fr 1fr; gap:var(--gap); }
+
+        .traction-proof {
+            display:flex; flex-direction:column; gap:clamp(0.5rem,0.9vw,0.9rem);
+        }
+
+        .proof-card {
+            display:flex; align-items:flex-start; gap:0.8em;
+            padding:clamp(0.8rem,1.3vw,1.2rem);
+            background:rgba(22,163,74,0.06);
+            border:1px solid rgba(34,197,94,0.2);
+            border-left:3px solid rgba(22,163,74,0.4);
+            border-radius:4px;
+        }
+        .proof-icon { font-size:clamp(1.3rem,2vw,1.8rem); flex-shrink:0; }
+        .proof-text strong {
+            display:block; font-size:var(--h3-size); font-weight:700;
+            color:#4a3800; margin-bottom:0.2em;
+        }
+        .proof-text span { font-size:var(--body-size); color:#15803d; line-height:1.4; }
+
+        .roadmap { display:flex; flex-direction:column; gap:clamp(0.5rem,0.9vw,0.9rem); }
+
+        .roadmap-item {
+            display:flex; align-items:flex-start; gap:1em;
+            padding:clamp(0.8rem,1.3vw,1.2rem);
+            background:#FFFFFF; border:1px solid rgba(184,134,11,0.12);
+            border-radius:4px;
+        }
+        .roadmap-item.active { background:rgba(184,134,11,0.08); border-color:#2563eb; }
+
+        .roadmap-phase {
+            flex-shrink:0;
+            width:clamp(60px,7vw,90px);
+            font-size:var(--label-size); font-weight:700;
+            color:var(--blue-light); text-transform:uppercase; letter-spacing:0.1em;
+            padding-top:0.15em;
+        }
+        .roadmap-item.active .roadmap-phase { color:var(--green); }
+
+        .roadmap-text strong {
+            display:block; font-size:var(--h3-size); font-weight:700;
+            color:#4a3800; margin-bottom:0.2em;
+        }
+        .roadmap-text span { font-size:var(--body-size); color:#4a3800; line-height:1.4; }
+
+        /* === SLIDE 7 — THE ASK === */
+        .s7-title .accent { color:var(--green); }
+
+        .ask-grid { display:grid; grid-template-columns:1fr 1fr; gap:var(--gap); }
+
+        .ask-left { display:flex; flex-direction:column; gap:clamp(0.6rem,1vw,1rem); }
+
+        .ask-box {
+            padding:clamp(1rem,1.8vw,1.8rem);
+            background:rgba(22,163,74,0.06);
+            border:1px solid rgba(34,197,94,0.35);
+            border-radius:4px; text-align:center;
+        }
+
+        .ask-amount {
+            font-size:clamp(2.5rem,5vw,5rem); font-weight:900;
+            color:var(--white); line-height:1;
+        }
+        .ask-amount .unit { font-size:0.4em; color:var(--green); }
+        .ask-label {
+            font-size:var(--body-size); font-weight:600;
+            color:var(--green); margin-top:0.3em;
+        }
+
+        .use-list { display:flex; flex-direction:column; gap:clamp(0.4rem,0.7vw,0.8rem); }
+
+        .use-item {
+            display:flex; align-items:center; gap:0.8em;
+            padding:clamp(0.7rem,1.1vw,1rem);
+            background:#FFFFFF; border:1px solid rgba(184,134,11,0.12);
+            border-radius:4px;
+        }
+
+        .use-pct {
+            flex-shrink:0;
+            font-size:clamp(1.2rem,2.5vw,2rem); font-weight:900;
+            color:var(--blue-light); min-width:60px;
+        }
+
+        .use-text { font-size:var(--body-size); font-weight:500; color:#4a3800; }
+
+        .ask-right { display:flex; flex-direction:column; gap:clamp(0.6rem,1vw,1rem); }
+
+        .team-card {
+            padding:clamp(0.8rem,1.3vw,1.2rem);
+            background:#FFFFFF; border:1px solid rgba(184,134,11,0.12);
+            border-radius:4px;
+        }
+
+        .team-name { font-size:var(--h3-size); font-weight:700; color:#4a3800; margin-bottom:0.15em; }
+        .team-role { font-size:var(--body-size); color:var(--blue-light); font-weight:600; margin-bottom:0.2em; }
+        .team-bio { font-size:var(--small-size); color:var(--muted); line-height:1.4; }
+
+        .contact-box {
+            padding:clamp(0.9rem,1.5vw,1.4rem);
+            background:linear-gradient(105deg, rgba(37,99,235,0.2) 0%, rgba(37,99,235,0.05) 100%);
+            border:1px solid var(--blue);
+            border-radius:4px;
+        }
+
+        .contact-main {
+            font-size:var(--h3-size); font-weight:800;
+            color:var(--green); margin-bottom:0.3em;
+        }
+        .contact-sub { font-size:var(--body-size); color:#4a3800; line-height:1.6; }
+
+        /* === PROGRESS BAR === */
+        .progress-bar {
+            position:fixed; top:0; left:0;
+            height:3px; width:0%;
+            background:linear-gradient(90deg, #D4A843, #16a34a);
+            z-index:1000; transition:width 0.3s ease;
+        }
+
+        /* === NAVIGATION DOTS === */
+        .nav-dots {
+            position:fixed; right:clamp(0.8rem,2vw,1.5rem); top:50%;
+            transform:translateY(-50%);
+            display:flex; flex-direction:column; gap:0.45rem;
+            z-index:999;
+        }
+        .nav-dot {
+            width:6px; height:6px; border-radius:50%;
+            background:var(--muted); cursor:pointer;
+            transition:all 0.3s; border:none; padding:0;
+        }
+        .nav-dot.active { background:var(--green); transform:scale(1.6); box-shadow:0 0 8px rgba(184,134,11,0.4); }
+        .nav-dot:hover { background:var(--blue); transform:scale(1.3); }
+
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <nav class="nav-dots" id="navDots"></nav>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 1 — COVER                                              -->
+    <!-- ============================================================ -->
+    <section class="slide" id="slide-1" style="background:#FFFDF7;">
+        <!-- Ornamental gold corners -->
+        <svg style="position:absolute;top:12px;left:12px;z-index:2;opacity:.5;" width="80" height="80" viewBox="0 0 80 80"><path d="M0,30 Q0,0 30,0 L80,0 L80,6 L30,6 Q6,6 6,30 L6,80 L0,80 Z" fill="url(#goldGrad)"/><defs><linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD700"/><stop offset="50%" stop-color="#D4A843"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs></svg>
+        <svg style="position:absolute;top:12px;right:12px;z-index:2;opacity:.5;transform:scaleX(-1);" width="80" height="80" viewBox="0 0 80 80"><path d="M0,30 Q0,0 30,0 L80,0 L80,6 L30,6 Q6,6 6,30 L6,80 L0,80 Z" fill="url(#goldGrad2)"/><defs><linearGradient id="goldGrad2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD700"/><stop offset="50%" stop-color="#D4A843"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs></svg>
+        <svg style="position:absolute;bottom:12px;left:12px;z-index:2;opacity:.5;transform:scaleY(-1);" width="80" height="80" viewBox="0 0 80 80"><path d="M0,30 Q0,0 30,0 L80,0 L80,6 L30,6 Q6,6 6,30 L6,80 L0,80 Z" fill="url(#goldGrad3)"/><defs><linearGradient id="goldGrad3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD700"/><stop offset="50%" stop-color="#D4A843"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs></svg>
+        <svg style="position:absolute;bottom:12px;right:12px;z-index:2;opacity:.5;transform:scale(-1,-1);" width="80" height="80" viewBox="0 0 80 80"><path d="M0,30 Q0,0 30,0 L80,0 L80,6 L30,6 Q6,6 6,30 L6,80 L0,80 Z" fill="url(#goldGrad4)"/><defs><linearGradient id="goldGrad4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD700"/><stop offset="50%" stop-color="#D4A843"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs></svg>
+        <div class="slide-content" style="align-items:center;text-align:center;position:relative;z-index:1;justify-content:center;">
+            <div class="stagger" style="display:flex;flex-direction:column;align-items:center;">
+                <div class="chip green reveal" style="margin-bottom:var(--egap);">🌱 Seed Round · Đang mở</div>
+
+                <h1 class="reveal" style="font-size:var(--title-size);font-weight:900;line-height:.93;letter-spacing:-.03em;margin-bottom:var(--gap);">
+                    <span style="
+                        background:linear-gradient(135deg,#FFD700 0%,#FFF0A0 20%,#DAA520 40%,#FFD700 55%,#FFF8C0 70%,#B8860B 85%,#FFD700 100%);
+                        -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+                        -webkit-text-stroke:2px rgba(0,0,0,.15);
+                        filter:drop-shadow(0 3px 0px rgba(0,0,0,.8)) drop-shadow(0 6px 18px rgba(101,67,0,.6));
+                    ">ERP<br>Kim Loại Quý</span>
+                </h1>
+
+                <p class="reveal" style="font-size:var(--body-size);color:#4a3800;max-width:520px;line-height:1.6;margin-bottom:var(--gap);">
+                    Nền tảng SaaS chuyên biệt đầu tiên cho ngành KD Kim Loại Quý Việt Nam.<br>Đã vận hành thực tế tại chuỗi Ancarat.
+                </p>
+
+                <div class="reveal" style="display:flex;gap:var(--gap);justify-content:center;flex-wrap:wrap;">
+                    <div style="text-align:center;">
+                        <div style="font-size:clamp(1.8rem,4vw,3rem);font-weight:900;line-height:1;">18K<span style="font-size:.45em;color:var(--blue-light);">+</span></div>
+                        <div style="font-size:var(--label-size);color:var(--muted);margin-top:.2em;">Cơ sở KD mục tiêu</div>
+                    </div>
+                    <div style="width:1px;background:rgba(184,134,11,0.15);align-self:stretch;"></div>
+                    <div style="text-align:center;">
+                        <div style="font-size:clamp(1.8rem,4vw,3rem);font-weight:900;line-height:1;color:var(--green);">$4.3<span style="font-size:.45em;color:var(--blue-light);">B</span></div>
+                        <div style="font-size:var(--label-size);color:var(--muted);margin-top:.2em;">Industry size VN</div>
+                    </div>
+                    <div style="width:1px;background:rgba(184,134,11,0.15);align-self:stretch;"></div>
+                    <div style="text-align:center;">
+                        <div style="font-size:clamp(1.8rem,4vw,3rem);font-weight:900;line-height:1;color:var(--amber);">90<span style="font-size:.45em;color:var(--amber);">%</span></div>
+                        <div style="font-size:var(--label-size);color:var(--muted);margin-top:.2em;">Chưa chuẩn hoá</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-nav"><span class="nav-title">Investor Deck</span><span class="nav-divider"></span><span class="nav-num">01 / 09</span></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 2 — MARKET OPPORTUNITY                                 -->
+    <!-- ============================================================ -->
+    <section class="slide" id="slide-2">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip reveal">Market Opportunity · ERP SaaS</span>
+                <h2 class="s2-title reveal">TAM/SAM/SOM — <span class="accent">Thị trường ERP</span></h2>
+            </div>
+
+            <!-- TAM / SAM / SOM — 3 cards ngang -->
+            <div class="market-grid stagger">
+                <div class="market-card reveal" style="border-top:3px solid rgba(184,134,11,0.5);">
+                    <div style="font-size:var(--label-size);color:var(--muted);margin-bottom:4px;">TAM Growth · SaaS Subscription</div>
+                    <!-- Line chart SVG Y1→Y3 -->
+                    <svg viewBox="0 0 220 80" preserveAspectRatio="xMidYMid meet" style="width:100%;display:block;margin-bottom:4px;">
+                        <!-- Grid lines -->
+                        <line x1="30" y1="10" x2="30" y2="62" stroke="#e2e8f0" stroke-width="1"/>
+                        <line x1="110" y1="10" x2="110" y2="62" stroke="#e2e8f0" stroke-width="1"/>
+                        <line x1="190" y1="10" x2="190" y2="62" stroke="#e2e8f0" stroke-width="1"/>
+                        <!-- Area fill Y1=400→y=55, Y2=450→y=38, Y3=510→y=18 (range 400-510 → 55px tall) -->
+                        <polygon points="30,55 110,38 190,18 190,62 110,62 30,62" fill="rgba(184,134,11,0.1)"/>
+                        <!-- Line -->
+                        <polyline points="30,55 110,38 190,18" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+                        <!-- Dots -->
+                        <circle cx="30" cy="55" r="4" fill="#16a34a" stroke="#fff" stroke-width="1.5"/>
+                        <circle cx="110" cy="38" r="4" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+                        <circle cx="190" cy="18" r="4" fill="#d97706" stroke="#fff" stroke-width="1.5"/>
+                        <!-- Values -->
+                        <text x="30" y="48" text-anchor="middle" font-size="9" font-weight="800" fill="#16a34a" font-family="Be Vietnam Pro">400 tỷ</text>
+                        <text x="110" y="31" text-anchor="middle" font-size="9" font-weight="800" fill="#2563eb" font-family="Be Vietnam Pro">450 tỷ</text>
+                        <text x="190" y="11" text-anchor="middle" font-size="9" font-weight="800" fill="#d97706" font-family="Be Vietnam Pro">510 tỷ</text>
+                        <!-- Year labels -->
+                        <text x="30" y="74" text-anchor="middle" font-size="8" fill="#64748b" font-family="Be Vietnam Pro">Y1 · 2026</text>
+                        <text x="110" y="74" text-anchor="middle" font-size="8" fill="#64748b" font-family="Be Vietnam Pro">Y2 · 2027</text>
+                        <text x="190" y="74" text-anchor="middle" font-size="8" fill="#64748b" font-family="Be Vietnam Pro">Y3 · 2028</text>
+                        <!-- Sub-labels -->
+                        <text x="30" y="63" text-anchor="middle" font-size="6.5" fill="#94a3b8" font-family="Be Vietnam Pro">18K tiệm vàng</text>
+                    </svg>
+                    <div style="display:flex;flex-direction:column;gap:2px;">
+                        <div style="display:flex;align-items:center;gap:4px;font-size:var(--label-size);"><span style="width:8px;height:8px;border-radius:50%;background:#16a34a;flex-shrink:0;"></span><span style="color:var(--muted);">Y1: Starter+ · 18K tiệm vàng</span></div>
+                        <div style="display:flex;align-items:center;gap:4px;font-size:var(--label-size);"><span style="width:8px;height:8px;border-radius:50%;background:#2563eb;flex-shrink:0;"></span><span style="color:var(--muted);">Y2: +Lite 500K · +6.8K tiệm nhỏ</span></div>
+                        <div style="display:flex;align-items:center;gap:4px;font-size:var(--label-size);"><span style="width:8px;height:8px;border-radius:50%;background:#d97706;flex-shrink:0;"></span><span style="color:var(--muted);">Y3: +Đá quý · +Phong thuỷ</span></div>
+                    </div>
+                </div>
+                <div class="market-card reveal" style="
+                    border-top:3px solid #16a34a;
+                    background:linear-gradient(135deg,rgba(22,163,74,0.10) 0%,rgba(22,163,74,0.03) 100%);
+                    position:relative;overflow:hidden;
+                    box-shadow:0 0 0 2px rgba(22,163,74,0.25), 0 4px 24px rgba(22,163,74,0.15);
+                    animation:financePulse 2.4s ease-in-out infinite;
+                ">
+                    <!-- Shimmer sweep -->
+                    <div style="
+                        position:absolute;top:0;left:-100%;width:60%;height:100%;
+                        background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent);
+                        animation:financeShimmer 2.8s ease-in-out infinite;
+                        pointer-events:none;
+                    "></div>
+                    <div style="font-size:var(--label-size);color:#16a34a;font-weight:700;margin-bottom:2px;text-transform:uppercase;letter-spacing:.5px;">🏦 Next Frontier</div>
+                    <div style="font-size:var(--label-size);color:var(--muted);margin-bottom:2px;">Loan referral · Insurance · Supply chain financing</div>
+                    <div class="market-stat green" style="animation:financePop 2.4s ease-in-out infinite;">~300<span class="unit" style="color:var(--green);">tỷ₫</span></div>
+                    <div class="market-label" style="color:#16a34a;">TAM Y4+ · Financial Layer</div>
+                    <div class="market-desc">Lý lịch tài chính số · Kết nối Bank/Fintech · Insurance tồn kho · Supply chain</div>
+                    <div style="margin-top:6px;padding:5px 8px;background:rgba(22,163,74,0.12);border:1px solid rgba(22,163,74,0.3);border-radius:5px;font-size:var(--label-size);color:#16a34a;font-weight:600;">
+                        ✓ KiotViet Capital + iPos Finance đạt 150–200 tỷ/năm — Fanlabs có RFID collateral = lợi thế vượt trội
+                    </div>
+                </div>
+                <style>
+                @keyframes financePulse {
+                    0%,100% { box-shadow:0 0 0 2px rgba(22,163,74,0.25), 0 4px 24px rgba(22,163,74,0.12); }
+                    50%      { box-shadow:0 0 0 3px rgba(22,163,74,0.55), 0 6px 32px rgba(22,163,74,0.30); }
+                }
+                @keyframes financeShimmer {
+                    0%   { left:-100%; }
+                    60%,100% { left:160%; }
+                }
+                @keyframes financePop {
+                    0%,100% { transform:scale(1); }
+                    50%     { transform:scale(1.04); }
+                }
+                </style>
+                <!-- SOM card with stacked bar chart -->
+                <div class="market-card amber-top reveal" style="padding-bottom:clamp(.3rem,.6vw,.5rem);">
+                    <div class="market-label" style="margin-bottom:.2em;">SOM — 5 Years Revenue</div>
+                    <!-- Legend -->
+                    <div style="display:flex;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
+                        <div style="display:flex;align-items:center;gap:3px;font-size:6.5px;color:#64748b;font-family:'Be Vietnam Pro',sans-serif;">
+                            <div style="width:8px;height:8px;border-radius:2px;background:#d97706;"></div>SaaS ARR
+                        </div>
+                        <div style="display:flex;align-items:center;gap:3px;font-size:6.5px;color:#64748b;font-family:'Be Vietnam Pro',sans-serif;">
+                            <div style="width:8px;height:8px;border-radius:2px;background:#16a34a;"></div>Financial Layer
+                        </div>
+                    </div>
+                    <!--
+                        Scale: max = 49.8+30 = ~80 tỷ → 50px height → 1tỷ = 0.625px
+                        Bar bottom y=63, bar area 50px (y=13..63)
+                        Y1: SaaS=1.6→1px  Y2: SaaS=5.3→3px  Y3: SaaS=12.2→8px
+                        Y4: SaaS=27.1→17px + Finance=10→6px = 23px total
+                        Y5: SaaS=49.8→31px + Finance=30→19px = 50px total
+                    -->
+                    <svg viewBox="0 0 260 100" preserveAspectRatio="xMidYMid meet" style="width:100%;display:block;">
+                        <!-- Y1 — SaaS only -->
+                        <rect x="10" y="62" width="36" height="1" rx="1" fill="#d97706"/>
+                        <!-- Y2 — SaaS only -->
+                        <rect x="58" y="60" width="36" height="3" rx="1" fill="#d97706" opacity=".75"/>
+                        <!-- Y3 — SaaS only -->
+                        <rect x="106" y="55" width="36" height="8" rx="2" fill="#d97706" opacity=".85"/>
+                        <!-- Y4 — SaaS bottom + Finance top -->
+                        <rect x="154" y="46" width="36" height="17" rx="2" fill="#d97706" opacity=".9"/>
+                        <rect x="154" y="40" width="36" height="6" rx="2" fill="#16a34a" opacity=".9"/>
+                        <!-- Y5 — SaaS bottom + Finance top -->
+                        <rect x="202" y="32" width="36" height="31" rx="2" fill="#d97706"/>
+                        <rect x="202" y="13" width="36" height="19" rx="2" fill="#16a34a"/>
+                        <!-- Finance layer label arrow Y4 -->
+                        <line x1="172" y1="40" x2="172" y2="37" stroke="#16a34a" stroke-width="1" stroke-dasharray="2,1"/>
+                        <text x="172" y="35" text-anchor="middle" font-size="6" fill="#16a34a" font-weight="700" font-family="Be Vietnam Pro">+10</text>
+                        <!-- Values on top of full bar -->
+                        <text x="28" y="58" text-anchor="middle" font-size="7" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">1.6</text>
+                        <text x="76" y="56" text-anchor="middle" font-size="7" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">5.3</text>
+                        <text x="124" y="51" text-anchor="middle" font-size="7" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">12.2</text>
+                        <text x="172" y="27" text-anchor="middle" font-size="7.5" fill="#0f172a" font-weight="800" font-family="Be Vietnam Pro">37.1</text>
+                        <text x="220" y="9" text-anchor="middle" font-size="8" fill="#0f172a" font-weight="900" font-family="Be Vietnam Pro">79.8 tỷ₫</text>
+                        <!-- "Finance" badge Y5 -->
+                        <text x="220" y="24" text-anchor="middle" font-size="6" fill="#16a34a" font-weight="700" font-family="Be Vietnam Pro">+30 Finance</text>
+                        <!-- Year labels -->
+                        <text x="28" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y1</text>
+                        <text x="76" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y2</text>
+                        <text x="124" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y3</text>
+                        <text x="172" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y4 🏦</text>
+                        <text x="220" y="74" text-anchor="middle" font-size="7" fill="#64748b" font-family="Be Vietnam Pro">Y5 🏦</text>
+                        <!-- KH count -->
+                        <text x="28" y="83" text-anchor="middle" font-size="6" fill="#94a3b8" font-family="Be Vietnam Pro">68 KH</text>
+                        <text x="76" y="83" text-anchor="middle" font-size="6" fill="#94a3b8" font-family="Be Vietnam Pro">379</text>
+                        <text x="124" y="83" text-anchor="middle" font-size="6" fill="#94a3b8" font-family="Be Vietnam Pro">898</text>
+                        <text x="172" y="83" text-anchor="middle" font-size="6" fill="#94a3b8" font-family="Be Vietnam Pro">2.281</text>
+                        <text x="220" y="83" text-anchor="middle" font-size="6" fill="#94a3b8" font-family="Be Vietnam Pro">4.378</text>
+                        <!-- Baseline -->
+                        <line x1="5" y1="63" x2="255" y2="63" stroke="#e2e8f0" stroke-width=".8"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Segment Pie + Compliance insight — 2 cột ngang -->
+            <div class="reveal s2-bottom-row" style="display:grid;grid-template-columns:auto 1fr;gap:var(--gap);align-items:center;">
+                <!-- LEFT: Pie + legend -->
+                <div style="display:flex;align-items:center;gap:clamp(8px,1.5vw,16px);">
+                    <svg viewBox="0 0 160 160" width="clamp(90px,10vw,130px)" height="clamp(90px,10vw,130px)">
+                        <circle cx="80" cy="80" r="65" fill="#f1f5f9"/>
+                        <circle cx="80" cy="80" r="50" fill="none" stroke="#94a3b8" stroke-width="26" stroke-dasharray="157 314" stroke-dashoffset="0" transform="rotate(-90 80 80)"/>
+                        <circle cx="80" cy="80" r="50" fill="none" stroke="#3b82f6" stroke-width="26" stroke-dasharray="94 314" stroke-dashoffset="-157" transform="rotate(-90 80 80)"/>
+                        <circle cx="80" cy="80" r="50" fill="none" stroke="#7c3aed" stroke-width="26" stroke-dasharray="47 314" stroke-dashoffset="-251" transform="rotate(-90 80 80)"/>
+                        <circle cx="80" cy="80" r="50" fill="none" stroke="#16a34a" stroke-width="26" stroke-dasharray="16 314" stroke-dashoffset="-298" transform="rotate(-90 80 80)"/>
+                        <circle cx="80" cy="80" r="32" fill="#f8faff"/>
+                        <text x="80" y="76" text-anchor="middle" font-size="11" font-weight="800" fill="#0f172a" font-family="Be Vietnam Pro">18K</text>
+                        <text x="80" y="90" text-anchor="middle" font-size="8" fill="#64748b" font-family="Be Vietnam Pro">cơ sở</text>
+                    </svg>
+                    <div style="display:flex;flex-direction:column;gap:clamp(3px,.5vw,5px);">
+                        <div style="display:flex;align-items:center;gap:6px;font-size:var(--body-size);"><div style="width:10px;height:10px;border-radius:3px;background:#94a3b8;flex-shrink:0;"></div><strong>~9.000</strong> <span style="color:var(--muted);">Micro — Lite Y2+</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;font-size:var(--body-size);"><div style="width:10px;height:10px;border-radius:3px;background:#3b82f6;flex-shrink:0;"></div><strong>~5.400</strong> <span style="color:var(--muted);">SMB ⭐ Primary</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;font-size:var(--body-size);"><div style="width:10px;height:10px;border-radius:3px;background:#7c3aed;flex-shrink:0;"></div><strong>~2.700</strong> <span style="color:var(--muted);">Mid-market</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;font-size:var(--body-size);"><div style="width:10px;height:10px;border-radius:3px;background:#16a34a;flex-shrink:0;"></div><strong>~900</strong> <span style="color:var(--muted);">Enterprise</span></div>
+                    </div>
+                </div>
+                <!-- RIGHT: Compliance insight -->
+                <div class="market-insight" style="margin:0;height:100%;display:flex;flex-direction:column;justify-content:center;">
+                    🎯 <strong>Luật HĐĐT bắt buộc 100% cơ sở KD kim loại quý phải số hoá</strong> — ~15.800 cơ sở = khách hàng tiềm năng.<br><br>
+                    Nghị định HĐĐT 2025 = <strong>compliance forcing event</strong> — buộc 100% chuẩn hoá HĐĐT.
+                </div>
+            </div>
+        </div>
+        <div class="slide-nav"><span class="nav-title">Market</span><span class="nav-divider"></span><span class="nav-num">02 / 09</span></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 3 — PROBLEM & WHY NOW                                  -->
+    <!-- ============================================================ -->
+    <section class="slide" id="slide-3">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip amber reveal">Problem · Why Now</span>
+                <h2 class="s3-title reveal">Ngành KD Kim loại quý đang bị <span class="accent">bỏ lại</span></h2>
+            </div>
+
+            <div class="problem-cols">
+                <div class="problem-list stagger">
+                    <div class="problem-item reveal">
+                        <span class="icon">📋</span>
+                        <div class="text">
+                            <strong>90% cơ sở chưa chuẩn hoá</strong>
+                            <span>Quản lý Excel, phần mềm cũ — chưa chuẩn hoá xuất HĐĐT, không tích hợp kế toán</span>
+                        </div>
+                    </div>
+                    <div class="problem-item reveal">
+                        <span class="icon">⏱️</span>
+                        <div class="text">
+                            <strong>Kiểm kho thủ công 2-4 giờ/ngày</strong>
+                            <span>Tồn kho hàng trăm triệu quản lý bằng sổ tay — rủi ro thất thoát cực cao</span>
+                        </div>
+                    </div>
+                    <div class="problem-item reveal">
+                        <span class="icon">🏚️</span>
+                        <div class="text">
+                            <strong>Phần mềm on-premise lỗi thời</strong>
+                            <span>Công nghệ 2000s, không cloud, không tích hợp nghiệp vụ đặc thù (giá vàng, NFC/RFID, cân)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="why-now stagger">
+                    <div class="why-now-label reveal">⚡ Tại sao bây giờ?</div>
+                    <div class="why-item reveal">
+                        <span class="icon">⚖️</span>
+                        <div class="text">
+                            <strong>Pháp lý buộc chuyển đổi số</strong>
+                            <span>Nghị định HĐĐT 2025: bắt buộc MỌI giao dịch vàng — 18.000 cơ sở PHẢI số hoá</span>
+                        </div>
+                    </div>
+                    <div class="why-item reveal">
+                        <span class="icon">🏆</span>
+                        <div class="text">
+                            <strong>Đã chứng minh tại Ancarat</strong>
+                            <span>Chuỗi 10 chi nhánh + 200 đại lý, ~12.000 tỷ/năm — proof of concept không ai có</span>
+                        </div>
+                    </div>
+                    <div class="why-item reveal">
+                        <span class="icon">🚫</span>
+                        <div class="text">
+                            <strong>Không có đối thủ quá lớn trực tiếp</strong>
+                            <span>Rất ít SaaS chuyên biệt cho ngành KD kim loại quý tại VN — blue ocean</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-nav"><span class="nav-title">Problem</span><span class="nav-divider"></span><span class="nav-num">03 / 09</span></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 4 — PRODUCT & MOAT                                     -->
+    <!-- ============================================================ -->
+    <section class="slide" id="slide-4">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip green reveal">Giá Trị Khác Biệt</span>
+                <h2 class="s4-title reveal">4 lý do <span class="accent" style="color:var(--green);">không thể sao chép</span></h2>
+            </div>
+
+            <div class="product-grid stagger" style="grid-template-columns:1fr 1fr;gap:clamp(.4rem,.9vw,.7rem);">
+                <!-- #1 ANCARAT — full width highlight -->
+                <div class="product-card reveal" style="grid-column:1/-1;border:1px solid rgba(22,163,74,0.2);border-top:4px solid rgba(22,163,74,0.5);background:linear-gradient(105deg,rgba(22,163,74,0.08),rgba(22,163,74,0.03));">
+                    <div style="display:flex;gap:.8em;align-items:flex-start;">
+                        <span class="product-icon">🏆</span>
+                        <div>
+                            <p class="product-name" style="color:var(--green);font-size:var(--h3-size);">Thực chiến từ Ancarat</p>
+                            <p class="product-desc" style="font-weight:600;">Xây dựng từ thực tế vận hành chuỗi <strong style="color:var(--green);">10 chi nhánh + 200 đại lý</strong> · Doanh thu <strong style="color:var(--green);">~12.000 tỷ/năm</strong> — không phải lý thuyết</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- #2 MISA -->
+                <div class="product-card reveal" style="border-top:3px solid var(--blue-bright);">
+                    <div style="display:flex;gap:.8em;align-items:flex-start;">
+                        <span class="product-icon">🔄</span>
+                        <div>
+                            <p class="product-name" style="color:var(--blue-bright);">Tự động hoá toàn trình với MISA</p>
+                            <p class="product-desc">Giải pháp duy nhất tích hợp MISA AMIS native — HĐĐT phát sinh tự động, tuân thủ nghị định 2025</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- #3 RFID + Cân điện tử (merged hardware native) -->
+                <div class="product-card reveal" style="border-top:3px solid var(--amber);">
+                    <div style="display:flex;gap:.8em;align-items:flex-start;">
+                        <span class="product-icon">🏷️</span>
+                        <div>
+                            <p class="product-name" style="color:var(--amber);">RFID + Cân điện tử native</p>
+                            <p class="product-desc">Kiểm kho 1.000 SP/30s · Driver native cho Shinko, Vibra, Sartorius, Shimadzu — đọc trọng lượng & tồn kho thẳng vào hệ thống</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- #4 AI Agent Native + MCP Server -->
+                <div class="product-card reveal" style="grid-column:1/-1;border:1px solid rgba(14,165,233,0.25);border-top:4px solid rgba(14,165,233,0.6);background:linear-gradient(105deg,rgba(14,165,233,0.08),rgba(14,165,233,0.03));">
+                    <div style="display:flex;gap:.8em;align-items:flex-start;">
+                        <span class="product-icon">🤖</span>
+                        <div>
+                            <p class="product-name" style="color:#0ea5e9;font-size:var(--h3-size);">AI-Agent Native · MCP Server built-in</p>
+                            <p class="product-desc" style="font-weight:600;">Thiết kế ngay từ đầu cho AI Agent — đi kèm <strong style="color:#0ea5e9;">MCP Server riêng</strong> cho phép Claude / ChatGPT / Gemini truy vấn tồn kho, chốt đơn, xuất báo cáo, tư vấn khách bằng ngôn ngữ tự nhiên · Đối thủ legacy cần viết lại toàn bộ để theo kịp</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="slide-nav"><span class="nav-title">Product</span><span class="nav-divider"></span><span class="nav-num">04 / 09</span></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 5 — BUSINESS MODEL                                     -->
+    <!-- ============================================================ -->
+    <section class="slide" id="slide-5">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip green reveal">Revenue Model</span>
+                <h2 class="s5-title reveal">SaaS + Hardware <span class="accent">Flywheel</span></h2>
+            </div>
+
+            <div class="bm-grid">
+                <!-- Left: Pricing tiers -->
+                <div class="bm-left stagger">
+                    <div class="bm-tier reveal" style="background:rgba(22,163,74,0.06);border-color:rgba(16,185,129,0.4)">
+                        <div class="bm-tier-name" style="color:#059669">⬜ Lite <small style="font-size:0.7em;font-weight:500">(Y2+)</small></div>
+                        <div class="bm-tier-price" style="color:#059669">500K₫<span style="font-size:0.5em;color:var(--muted)">/th</span></div>
+                        <div class="bm-tier-desc">1 CH · 2 users · POS + HĐĐT cơ bản</div>
+                    </div>
+                    <div class="bm-tier highlight reveal">
+                        <div class="bm-tier-name">⭐ Starter</div>
+                        <div class="bm-tier-price">990K₫<span style="font-size:0.5em;color:var(--muted)">/th</span></div>
+                        <div class="bm-tier-desc">Giá vàng live · CRM · NFC/RFID · Cân</div>
+                    </div>
+                    <div class="bm-tier reveal">
+                        <div class="bm-tier-name">Professional</div>
+                        <div class="bm-tier-price">2.49M₫<span style="font-size:0.5em;color:var(--muted)">/th</span></div>
+                        <div class="bm-tier-desc">Multi-branch · MISA · KPI Dashboard</div>
+                    </div>
+                    <div class="bm-tier reveal">
+                        <div class="bm-tier-name">Enterprise</div>
+                        <div class="bm-tier-price">4.99M₫<span style="font-size:0.5em;color:var(--muted)">+/th</span></div>
+                        <div class="bm-tier-desc">Unlimited · API · SLA 24/7 · Custom</div>
+                    </div>
+                </div>
+
+                <!-- Right: Flywheel + Metrics -->
+                <div class="bm-right stagger">
+                    <!-- Flywheel unique -->
+                    <div class="metric-card reveal" style="border-left:3px solid var(--amber);background:rgba(212,168,67,0.08);">
+                        <div class="metric-label" style="color:var(--amber);">🔧 Hardware Bundle — Margin 38%</div>
+                        <div class="metric-sub">NFC reader + máy in tem + cân → doanh thu 1 lần ~10M/KH + tạo switching cost cao</div>
+                    </div>
+                    <div class="metric-card reveal" style="border-left:3px solid rgba(22,163,74,0.4);">
+                        <div class="metric-label" style="color:var(--green);">🔄 Consumables Recurring — Margin 70%</div>
+                        <div class="metric-sub">Tem RFID + tem nhãn + ribbon → ~220K/tiệm/tháng recurring ngoài SaaS fee</div>
+                    </div>
+                    <div class="metric-card reveal" style="border-left:3px solid var(--blue);">
+                        <div class="metric-label" style="color:var(--blue);">🔒 Compliance Lock-in</div>
+                        <div class="metric-sub">MISA HĐĐT gắn chặt dữ liệu kế toán → chuyển phần mềm = mất toàn bộ liên kết → churn 15%/năm, thấp hơn benchmark ngành 20-25%</div>
+                    </div>
+                    <div class="metric-card reveal" style="border-left:3px solid #7c3aed;">
+                        <div class="metric-label" style="color:#7c3aed;">📈 Natural Upsell</div>
+                        <div class="metric-sub">Lite → Starter → Pro + thêm chi nhánh + thêm hardware = ARPU tăng tự nhiên</div>
+                    </div>
+
+                    <!-- Key metrics bar -->
+                    <div style="display:flex;gap:clamp(.3rem,.6vw,.5rem);flex-wrap:wrap;" class="reveal">
+                        <div style="flex:1;background:rgba(22,163,74,0.06);border:1px solid rgba(22,163,74,.2);border-radius:4px;padding:clamp(.4rem,.7vw,.6rem);text-align:center;min-width:80px;">
+                            <div style="font-size:clamp(1rem,2vw,1.5rem);font-weight:900;color:var(--green);">1.84M₫</div>
+                            <div style="font-size:var(--label-size);color:var(--muted);">ARPU/th</div>
+                        </div>
+                        <div style="flex:1;background:rgba(184,134,11,0.06);border:1px solid rgba(37,99,235,.2);border-radius:4px;padding:clamp(.4rem,.7vw,.6rem);text-align:center;min-width:80px;">
+                            <div style="font-size:clamp(1rem,2vw,1.5rem);font-weight:900;color:var(--blue);">15%</div>
+                            <div style="font-size:var(--label-size);color:var(--muted);">Churn/năm</div>
+                        </div>
+                        <div style="flex:1;background:#f5f3ff;border:1px solid rgba(124,58,237,.2);border-radius:4px;padding:clamp(.4rem,.7vw,.6rem);text-align:center;min-width:80px;">
+                            <div style="font-size:clamp(1rem,2vw,1.5rem);font-weight:900;color:#7c3aed;">Y2</div>
+                            <div style="font-size:var(--label-size);color:var(--muted);">Breakeven</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-nav"><span class="nav-title">Business Model</span><span class="nav-divider"></span><span class="nav-num">05 / 09</span></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 6 — TRACTION                                           -->
+    <!-- ============================================================ -->
+    <section class="slide" id="slide-6">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip green reveal">Traction</span>
+                <h2 class="s6-title reveal">Đã <span class="accent">chứng minh</span> — không phải lý thuyết</h2>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);" class="stagger">
+                <div class="proof-card reveal" style="border-left:4px solid rgba(22,163,74,0.5);background:rgba(22,163,74,0.06);">
+                    <span class="proof-icon">🏪</span>
+                    <div class="proof-text">
+                        <strong>Ancarat — Live Production</strong>
+                        <span>Chuỗi 10 chi nhánh + 200 đại lý · Doanh thu ~12.000 tỷ/năm. Xử lý thực tế không gián đoạn.</span>
+                    </div>
+                </div>
+                <div class="proof-card reveal" style="border-left:4px solid rgba(184,134,11,0.5);background:rgba(184,134,11,0.06);">
+                    <img src="foripharm-logo.jpg" alt="Foripharm" style="width:clamp(36px,5vw,50px);height:clamp(36px,5vw,50px);object-fit:contain;flex-shrink:0;border-radius:4px;">
+                    <div class="proof-text">
+                        <strong>Kinh nghiệm triển khai ERP cho DPTW3</strong>
+                        <span>Foripharm (DPTW3) — đã niêm yết HNX. Team có kinh nghiệm thực chiến ERP doanh nghiệp lớn.</span>
+                    </div>
+                </div>
+                <div class="proof-card reveal">
+                    <span class="proof-icon">⚖️</span>
+                    <div class="proof-text">
+                        <strong>4 dòng cân tích hợp thành công</strong>
+                        <span>Shinko Vibra (live), Sartorius & Shimadzu (trước launch). Driver tự phát triển.</span>
+                    </div>
+                </div>
+                <div class="proof-card reveal" style="border-left:4px solid rgba(212,168,67,0.5);background:rgba(212,168,67,0.06);">
+                    <span class="proof-icon">💎</span>
+                    <div class="proof-text">
+                        <strong>Amora Jewelry — Early Adopter</strong>
+                        <span>Đang demo, cam kết làm reference customer công khai sau go-live 07/2026. Social proof ngoài Ancarat.</span>
+                    </div>
+                </div>
+                <div class="proof-card reveal">
+                    <img src="amis-logo.jpg" alt="AMIS Kế Toán" style="width:clamp(36px,5vw,50px);height:clamp(36px,5vw,50px);object-fit:contain;flex-shrink:0;border-radius:4px;">
+                    <div class="proof-text">
+                        <strong>MISA AMIS + HĐĐT live</strong>
+                        <span>HĐĐT tự động sync — đã pass compliance test. Sẵn sàng cho Nghị định HĐĐT 2025.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="market-insight reveal" style="margin-top:var(--gap);">
+                🏆 <strong>Ancarat proof = unfair advantage.</strong> Không startup nào có thể demo hệ thống đã chạy production tại chuỗi hàng đầu VN từ ngày đầu. Outsourcing track record 6B→7B chứng minh team execution — không chỉ build product.
+            </div>
+        </div>
+        <div class="slide-nav"><span class="nav-title">Traction</span><span class="nav-divider"></span><span class="nav-num">06 / 09</span></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 7 — TAM EXPANSION                                      -->
+    <!-- ============================================================ -->
+<section class="slide" id="slide-tam">
+        <div class="slide-content" style="overflow-y:auto;">
+            <div class="stagger">
+                <span class="reveal" style="
+                    display:inline-block;
+                    background:#fff;
+                    color:#16a34a;
+                    font-weight:800;
+                    font-size:clamp(11px,1.4vw,14px);
+                    letter-spacing:.06em;
+                    text-transform:uppercase;
+                    padding:6px 16px;
+                    border-radius:20px;
+                    border:2px solid #16a34a;
+                    animation:growthChipPulse 2s ease-in-out infinite;
+                    box-shadow:0 0 0 0 rgba(22,163,74,0.4);
+                ">🚀 Growth Strategy</span>
+                <style>
+                @keyframes growthChipPulse {
+                    0%,100% { box-shadow:0 0 0 0 rgba(22,163,74,0.4); background:#fff; color:#16a34a; }
+                    50%     { box-shadow:0 0 0 8px rgba(22,163,74,0); background:#dcfce7; color:#15803d; }
+                }
+                </style>
+                <h2 class="s6-title reveal" style="font-size:clamp(1.4rem,3.5vw,3rem);">Từ tiệm vàng đến <span class="accent">hạ tầng tài chính</span><br>ngành kim loại quý VN</h2>
+            </div>
+
+            <!-- 4 PHASE CARDS — 2×2 on mobile, 4×1 on desktop -->
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--egap);margin-bottom:var(--egap);" class="stagger tam-phase-grid">
+
+                <div class="reveal" style="background:rgba(22,163,74,0.06);border:2px solid rgba(22,163,74,0.4);border-radius:8px;padding:clamp(8px,2vw,14px);">
+                    <div style="font-size:var(--label-size);font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">✅ Y1 · 2026</div>
+                    <div style="font-size:clamp(1rem,2.5vw,1.4rem);font-weight:800;color:#1a1000;margin-bottom:4px;">Vàng & Bạc</div>
+                    <div style="font-size:var(--small-size);color:var(--muted);line-height:1.5;">18.000 tiệm · HĐĐT + AML 2026</div>
+                    <div style="margin-top:6px;padding:5px 8px;background:rgba(22,163,74,0.08);border-radius:5px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:var(--label-size);color:var(--muted);">TAM</span>
+                        <span style="font-size:clamp(1rem,2.5vw,1.4rem);font-weight:900;color:var(--green);">~400 tỷ</span>
+                    </div>
+                </div>
+
+                <div class="reveal" style="background:rgba(37,99,235,0.06);border:2px solid rgba(37,99,235,0.3);border-radius:8px;padding:clamp(8px,2vw,14px);">
+                    <div style="font-size:var(--label-size);font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">🎯 Y2 · 2027</div>
+                    <div style="font-size:clamp(1rem,2.5vw,1.4rem);font-weight:800;color:#1a1000;margin-bottom:4px;">Lite + Kim loại quý</div>
+                    <div style="font-size:var(--small-size);color:var(--muted);line-height:1.5;">Gói Lite 500K · 6.8K tiệm nhỏ · Bạch kim, palladium</div>
+                    <div style="margin-top:6px;padding:5px 8px;background:rgba(37,99,235,0.06);border-radius:5px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:var(--label-size);color:var(--muted);">TAM</span>
+                        <span style="font-size:clamp(1rem,2.5vw,1.4rem);font-weight:900;color:#2563eb;">~450 tỷ</span>
+                    </div>
+                </div>
+
+                <div class="reveal" style="background:rgba(212,168,67,0.08);border:2px solid rgba(212,168,67,0.4);border-radius:8px;padding:clamp(8px,2vw,14px);">
+                    <div style="font-size:var(--label-size);font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">💎 Y3 · 2028</div>
+                    <div style="font-size:clamp(1rem,2.5vw,1.4rem);font-weight:800;color:#1a1000;margin-bottom:4px;">Đá quý · Kim hoàn</div>
+                    <div style="font-size:var(--small-size);color:var(--muted);line-height:1.5;">Đá quý · Trang sức · Vòng phong thuỷ</div>
+                    <div style="margin-top:6px;padding:5px 8px;background:rgba(212,168,67,0.08);border-radius:5px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:var(--label-size);color:var(--muted);">TAM</span>
+                        <span style="font-size:clamp(1rem,2.5vw,1.4rem);font-weight:900;color:var(--amber);">~510 tỷ</span>
+                    </div>
+                </div>
+
+                <div class="reveal" style="
+                    background:linear-gradient(135deg,#fffbeb 0%,#fef9c3 60%,#fde68a 100%);
+                    border:2px solid #f59e0b;
+                    border-radius:8px;
+                    padding:clamp(8px,2vw,14px);
+                    position:relative;overflow:hidden;
+                    animation:financeCardPulse 2.2s ease-in-out infinite;
+                    box-shadow:0 0 0 2px rgba(245,158,11,0.3), 0 4px 20px rgba(245,158,11,0.2);
+                ">
+                    <!-- Shimmer -->
+                    <div style="position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent);animation:financeShimmer2 2.6s ease-in-out infinite;pointer-events:none;"></div>
+                    <!-- Growth arrow badge -->
+                    <div style="position:absolute;top:8px;right:10px;font-size:18px;animation:arrowBounce 1.5s ease-in-out infinite;">📈</div>
+                    <div style="font-size:var(--label-size);font-weight:800;color:#b45309;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">🏦 Y4 · 2029</div>
+                    <div style="font-size:clamp(1rem,2.5vw,1.4rem);font-weight:900;color:#78350f;margin-bottom:4px;">Lý lịch tài chính số</div>
+                    <div style="font-size:var(--small-size);color:#92400e;line-height:1.5;font-weight:600;">Kết nối Bank · Vay RFID collateral</div>
+                    <div style="margin-top:8px;padding:6px 10px;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);border-radius:6px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:var(--label-size);color:#92400e;font-weight:700;">TAM (bottom-up)</span>
+                        <span style="font-size:clamp(1rem,2.5vw,1.5rem);font-weight:900;color:#b45309;animation:growNum 2.2s ease-in-out infinite;">~300 tỷ</span>
+                    </div>
+                </div>
+                <style>
+                @keyframes financeCardPulse {
+                    0%,100% { box-shadow:0 0 0 2px rgba(245,158,11,0.3), 0 4px 20px rgba(245,158,11,0.15); }
+                    50%     { box-shadow:0 0 0 5px rgba(245,158,11,0.5), 0 6px 28px rgba(245,158,11,0.35); }
+                }
+                @keyframes financeShimmer2 {
+                    0%       { left:-100%; }
+                    55%,100% { left:160%; }
+                }
+                @keyframes arrowBounce {
+                    0%,100% { transform:translateY(0); }
+                    50%     { transform:translateY(-4px); }
+                }
+                @keyframes growNum {
+                    0%,100% { transform:scale(1); }
+                    50%     { transform:scale(1.08); color:#d97706; }
+                }
+                </style>
+
+            </div>
+
+            <!-- BOTTOM: 2 cards — stacks on mobile -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--egap);" class="stagger tam-bottom-grid">
+
+                <div class="metric-card reveal" style="border-left:3px solid var(--amber);padding:clamp(8px,1.5vw,12px);">
+                    <div class="metric-label" style="color:var(--amber);font-size:var(--small-size);">🏦 Tại sao ngân hàng cần Fanlabs Y4?</div>
+                    <div style="display:flex;flex-direction:column;gap:4px;margin-top:5px;">
+                        <div style="display:flex;gap:6px;font-size:var(--small-size);"><span style="color:var(--green);flex-shrink:0;">✓</span><span><strong>RFID collateral minh bạch</strong> — gram, tuổi, giá realtime</span></div>
+                        <div style="display:flex;gap:6px;font-size:var(--small-size);"><span style="color:var(--green);flex-shrink:0;">✓</span><span><strong>AML + KYC built-in</strong> từ Y1 — bank không cần làm lại</span></div>
+                        <div style="display:flex;gap:6px;font-size:var(--small-size);"><span style="color:var(--green);flex-shrink:0;">✓</span><span><strong>Fintech referral hợp pháp</strong> — không cần banking license</span></div>
+                        <div style="display:flex;gap:6px;font-size:var(--small-size);"><span style="color:var(--green);flex-shrink:0;">✓</span><span><strong>iPos / KiotViet</strong> đã validate mô hình tại VN</span></div>
+                    </div>
+                </div>
+
+                <div class="metric-card reveal" style="border-left:3px solid var(--green);background:rgba(22,163,74,0.04);padding:clamp(8px,1.5vw,12px);">
+                    <div class="metric-label" style="color:var(--green);font-size:var(--small-size);">📈 TAM Journey — 2 giai đoạn</div>
+                    <div style="display:flex;flex-direction:column;gap:5px;margin-top:5px;">
+                        <div style="font-size:var(--label-size);color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;">Giai đoạn 1 — SaaS Subscription</div>
+                        <div style="display:flex;justify-content:space-between;font-size:var(--small-size);">
+                            <span>Y1 · 18K tiệm vàng (Starter+)</span><span style="font-weight:800;color:var(--green);">~400 tỷ</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;font-size:var(--small-size);">
+                            <span>Y2 · + Gói Lite · 6.8K tiệm nhỏ</span><span style="font-weight:800;color:var(--green);">~450 tỷ</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;font-size:var(--small-size);">
+                            <span>Y3 · + Đá quý · Phong thuỷ</span><span style="font-weight:800;color:var(--amber);">~510 tỷ</span>
+                        </div>
+                        <div style="font-size:var(--label-size);color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;">Giai đoạn 2 — Financial Layer (bottom-up)</div>
+                        <div style="display:flex;justify-content:space-between;font-size:var(--small-size);">
+                            <span>Loan referral fee</span><span style="font-weight:700;color:var(--amber);">~100-200 tỷ</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;font-size:var(--small-size);">
+                            <span>Insurance commission</span><span style="font-weight:700;color:var(--amber);">~50 tỷ</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;font-size:var(--small-size);">
+                            <span>Supply chain financing</span><span style="font-weight:700;color:var(--amber);">~100 tỷ</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;font-size:var(--small-size);padding-top:4px;border-top:1px solid #F0E8CC;">
+                            <span style="font-weight:700;">Total Financial Layer TAM</span>
+                            <span style="font-weight:900;color:var(--amber);">~300 tỷ</span>
+                        </div>
+                    </div>
+                    <div style="margin-top:6px;font-size:var(--label-size);color:var(--muted);font-style:italic;">* Benchmark: KiotViet Capital + iPos Finance đạt 150-200 tỷ/năm · Fanlabs có RFID collateral = lợi thế hơn</div>
+                </div>
+
+            </div>
+
+            <div class="market-insight reveal" style="margin-top:var(--egap);font-size:var(--small-size);">
+                💡 <strong>Khi 5.000+ KH sử dụng ERP — mỗi KH có lý lịch tài chính số đầy đủ. Ngân hàng tìm đến chúng tôi, không phải ngược lại.</strong>
+            </div>
+
+        </div>
+        <div class="slide-nav"><span class="nav-title">Growth Strategy</span><span class="nav-divider"></span><span class="nav-num">07 / 09</span></div>
+    </section>
+
+    <style>
+    @media (min-width: 640px) {
+        .tam-phase-grid { grid-template-columns: repeat(4,1fr) !important; }
+        .tam-bottom-grid { grid-template-columns: 1fr 1fr !important; }
+    }
+    @media (max-width: 639px) {
+        .tam-bottom-grid { grid-template-columns: 1fr !important; }
+        #slide-tam .slide-content { justify-content: flex-start; padding-top: 16px; }
+    }
+    </style>
+
+
+    <!-- SLIDE 8 — ROADMAP                                            -->
+    <!-- ============================================================ -->
+<section class="slide" id="slide-6b">
+        <div class="slide-content" style="justify-content:flex-start;padding-top:clamp(12px,2vw,20px);">
+            <div class="stagger" style="margin-bottom:clamp(8px,1.5vw,14px);">
+                <span class="chip reveal">Roadmap</span>
+                <h2 class="s6-title reveal" style="font-size:clamp(1.3rem,3vw,2.2rem);">BUILD → GTM → <span class="accent">Scale</span></h2>
+            </div>
+
+            <!-- ARROW TIMELINE -->
+            <div class="reveal roadmap-timeline-wrap">
+            <div class="roadmap-timeline-inner">
+                <!-- Arrow bar -->
+                <div class="roadmap-arrow-bar" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-bottom:clamp(10px,1.5vw,16px);">
+
+                    <!-- Phase 1 — Done -->
+                    <div style="position:relative;display:flex;align-items:center;">
+                        <div style="background:#16a34a;color:#fff;font-weight:800;font-size:clamp(11px,1.5vw,15px);padding:12px 10px 12px 14px;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%);width:100%;text-align:center;line-height:1.4;z-index:5;">
+                            ✅ Q1 2026<br><span style="font-size:clamp(10px,1.2vw,13px);font-weight:600;opacity:.9;">Done</span>
+                        </div>
+                    </div>
+                    <!-- Phase 2 — BUILD -->
+                    <div style="position:relative;display:flex;align-items:center;margin-left:-16px;">
+                        <div style="background:#2563eb;color:#fff;font-weight:800;font-size:clamp(11px,1.5vw,15px);padding:12px 10px 12px 26px;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%);width:100%;text-align:center;line-height:1.4;z-index:4;">
+                            BUILD<br><span style="font-size:clamp(10px,1.2vw,13px);font-weight:600;opacity:.9;">Q2 2026</span>
+                        </div>
+                    </div>
+                    <!-- Phase 3 — GTM -->
+                    <div style="position:relative;display:flex;align-items:center;margin-left:-16px;">
+                        <div style="background:#d97706;color:#fff;font-weight:800;font-size:clamp(11px,1.5vw,15px);padding:12px 10px 12px 26px;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%);width:100%;text-align:center;line-height:1.4;z-index:3;">
+                            GTM<br><span style="font-size:clamp(10px,1.2vw,13px);font-weight:600;opacity:.9;">Q3–Q4 2026</span>
+                        </div>
+                    </div>
+                    <!-- Phase 4 — Y2 -->
+                    <div style="position:relative;display:flex;align-items:center;margin-left:-16px;">
+                        <div style="background:#e2e8f0;color:#475569;font-weight:700;font-size:clamp(11px,1.5vw,15px);padding:12px 10px 12px 26px;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%);width:100%;text-align:center;line-height:1.4;z-index:2;">
+                            Phase 2<br><span style="font-size:clamp(10px,1.2vw,13px);">Y2 · 2027</span>
+                        </div>
+                    </div>
+                    <!-- Phase 5 — Y3+ -->
+                    <div style="position:relative;display:flex;align-items:center;margin-left:-16px;">
+                        <div style="background:#e2e8f0;color:#475569;font-weight:700;font-size:clamp(11px,1.5vw,15px);padding:12px 10px 12px 26px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,16px 50%);width:100%;text-align:center;line-height:1.4;z-index:1;">
+                            Phase 3–4<br><span style="font-size:clamp(10px,1.2vw,13px);">Y3–Y4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content columns -->
+                <div class="roadmap-cols" style="display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(6px,1vw,12px);">
+
+                    <div style="padding:0 4px;">
+                        <div style="font-size:clamp(13px,1.6vw,17px);font-weight:800;color:#16a34a;margin-bottom:6px;">SaaS Foundation</div>
+                        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Multi-tenant core</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Auth + 116 models</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Docker + IaC</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#16a34a;font-weight:700;line-height:1.5;">98% complete ✅</li>
+                        </ul>
+                    </div>
+
+                    <div style="padding:0 4px;">
+                        <div style="font-size:clamp(13px,1.6vw,17px);font-weight:800;color:#2563eb;margin-bottom:6px;animation:goliveBlink 1.3s ease-in-out infinite;display:inline-block;">🚀 Go-Live 10/07</div>
+                        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• RBAC + Feature Gate</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Giá vàng + TV Display</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• HĐĐT + VNPay/Momo</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• In tem</li>
+                        </ul>
+                    </div>
+
+                    <div style="padding:0 4px;">
+                        <div style="font-size:clamp(13px,1.6vw,17px);font-weight:800;color:#d97706;margin-bottom:6px;">Sales & Scale</div>
+                        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Founding 50 EA</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Sales Director + AE/SDR</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Trade show + Content</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#d97706;font-weight:700;line-height:1.5;">68 KH · MRR 132M</li>
+                        </ul>
+                    </div>
+
+                    <div style="padding:0 4px;">
+                        <div style="font-size:clamp(13px,1.6vw,17px);font-weight:800;color:#475569;margin-bottom:6px;">Phase 2 · Y2 2027</div>
+                        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Gia công</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Loyalty</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Ký gửi</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Mobile App Manager</li>
+                        </ul>
+                    </div>
+
+                    <div style="padding:0 4px;">
+                        <div style="font-size:clamp(13px,1.6vw,17px);font-weight:800;color:#475569;margin-bottom:6px;">Đá quý → 🏦 FinLayer</div>
+                        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Trang sức + Phong thuỷ</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• TAM → 510 tỷ</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#334155;line-height:1.5;">• Kết nối Bank/Fintech</li>
+                            <li style="font-size:clamp(12px,1.4vw,15px);color:#d97706;font-weight:700;line-height:1.5;">TAM ×5 · +300 tỷ</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+            <!-- MOBILE: vertical cards -->
+            <div class="roadmap-mobile" style="flex-direction:column;gap:8px;margin-bottom:10px;">
+
+                <div style="border-left:4px solid #16a34a;background:rgba(22,163,74,0.06);border-radius:6px;padding:10px 12px;">
+                    <div style="font-size:13px;font-weight:800;color:#16a34a;margin-bottom:4px;">✅ Q1 2026 — SaaS Foundation</div>
+                    <div style="font-size:12px;color:#334155;line-height:1.6;">• Multi-tenant core · Auth · 116 models<br>• Docker + IaC · <strong style="color:#16a34a;">98% complete ✅</strong></div>
+                </div>
+
+                <div style="border-left:4px solid #2563eb;background:rgba(37,99,235,0.06);border-radius:6px;padding:10px 12px;">
+                    <div style="font-size:13px;font-weight:800;color:#2563eb;margin-bottom:4px;animation:goliveBlink 1.3s ease-in-out infinite;display:inline-block;">🚀 BUILD Q2 — Go-Live 10/07</div>
+                    <div style="font-size:12px;color:#334155;line-height:1.6;">• RBAC · Giá vàng · TV Display · HĐĐT<br>• VNPay/Momo · In tem</div>
+                </div>
+
+                <div style="border-left:4px solid #d97706;background:rgba(217,119,6,0.06);border-radius:6px;padding:10px 12px;">
+                    <div style="font-size:13px;font-weight:800;color:#d97706;margin-bottom:4px;">📈 GTM Q3–Q4 — Sales & Scale</div>
+                    <div style="font-size:12px;color:#334155;line-height:1.6;">• Founding 50 EA · Sales Director + AE/SDR<br>• Trade show + Content · <strong style="color:#d97706;">68 KH · MRR 132M</strong></div>
+                </div>
+
+                <div style="border-left:4px solid #94a3b8;background:#f8fafc;border-radius:6px;padding:10px 12px;">
+                    <div style="font-size:13px;font-weight:800;color:#475569;margin-bottom:4px;">📱 Phase 2 · Y2 2027</div>
+                    <div style="font-size:12px;color:#334155;line-height:1.6;">• Gia công · Loyalty · Ký gửi<br>• Mobile App Manager</div>
+                </div>
+
+                <div style="border-left:4px solid #d97706;background:#fffbeb;border-radius:6px;padding:10px 12px;">
+                    <div style="font-size:13px;font-weight:800;color:#92400e;margin-bottom:4px;">💎🏦 Phase 3–4 Y3–Y4 — Đá quý + FinLayer</div>
+                    <div style="font-size:12px;color:#334155;line-height:1.6;">• Trang sức · Phong thuỷ · TAM → 510 tỷ<br>• Kết nối Bank/Fintech · <strong style="color:#d97706;">TAM ×5 · +300 tỷ</strong></div>
+                </div>
+
+            </div>
+
+            <div class="market-insight reveal" style="margin-top:auto;">
+                🏦 <strong>Y4 Vision:</strong> Khi 5.000+ KH sử dụng ERP — mỗi KH có <strong>lý lịch tài chính số</strong> đầy đủ. Ngân hàng tìm đến chúng tôi, không phải ngược lại.
+            </div>
+        </div>
+        <div class="slide-nav"><span class="nav-title">Roadmap</span><span class="nav-divider"></span><span class="nav-num">08 / 09</span></div>
+    </section>
+    <style>
+    @keyframes goliveBlink {
+        0%,100% { color:#2563eb; text-shadow:none; }
+        50% { color:#22d3ee; text-shadow:0 0 8px rgba(34,211,238,0.7); }
+    }
+    /* Roadmap — Desktop: horizontal scroll */
+    .roadmap-timeline-wrap { overflow-x:auto; margin-bottom:clamp(10px,1.5vw,16px); }
+    .roadmap-timeline-inner { min-width:700px; }
+
+    /* Roadmap — Mobile: vertical cards */
+    @media (max-width:640px) {
+        #slide-6b .slide-content { justify-content:flex-start !important; overflow-y:auto; }
+        .roadmap-timeline-wrap { overflow-x:visible; }
+        .roadmap-timeline-inner { min-width:unset !important; }
+
+        /* Hide horizontal arrow bar on mobile, show mobile cards */
+        .roadmap-arrow-bar { display:none !important; }
+        .roadmap-cols { display:none !important; }
+        .roadmap-mobile { display:flex !important; }
+    }
+    @media (min-width:641px) {
+        .roadmap-mobile { display:none !important; }
+    }
+    </style>
+
+    <!-- ============================================================ -->
+    <!-- ============================================================ -->
+    <!-- SLIDE 9 — THE ASK                                            -->
+    <!-- ============================================================ -->
+    <section class="slide" id="slide-7">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip green reveal">Seed Round</span>
+                <h2 class="s7-title reveal">Cùng xây <span class="accent">SaaS ngành dọc</span><br>lớn nhất VN</h2>
+            </div>
+
+            <div class="ask-grid">
+                <div class="ask-left stagger">
+                    <div class="ask-box reveal">
+                        <div class="ask-amount">1.5<span class="unit"> tỷ VNĐ</span></div>
+                        <div class="ask-label">Seed Round · Valuation 15 tỷ · Max 10% equity · Bonus 30%</div>
+                    </div>
+
+                    <div class="use-list stagger">
+                        <div class="use-item reveal">
+                            <div class="use-pct">45%</div>
+                            <div class="use-text">Sales & Marketing — Sales Director, AE/SDR, trade show, ads, content</div>
+                        </div>
+                        <div class="use-item reveal">
+                            <div class="use-pct">25%</div>
+                            <div class="use-text">Lương cash buffer — ESOP 70/30 cover 9 tháng, buffer khi chuyển 100% cash Y2</div>
+                        </div>
+                        <div class="use-item reveal">
+                            <div class="use-pct">20%</div>
+                            <div class="use-text">Infrastructure — CMC Cloud scale-up, tooling, hardware R&D Phase 2</div>
+                        </div>
+                        <div class="use-item reveal">
+                            <div class="use-pct">10%</div>
+                            <div class="use-text">Operations & Working Capital — contingency, legal, accounting</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ask-right stagger">
+                    <div class="team-card reveal">
+                        <div class="team-name">👥 Core Team</div>
+                        <div style="display:flex;flex-direction:column;gap:clamp(3px,.5vw,6px);margin-top:.4em;">
+                            <div style="font-size:var(--body-size);font-weight:700;color:#4a3800;">Hà Phạm <span style="font-weight:500;color:var(--muted);">— CEO</span></div>
+                            <div style="font-size:var(--body-size);font-weight:700;color:#4a3800;">Hưng <span style="font-weight:500;color:var(--muted);">— CTO</span></div>
+                            <div style="font-size:var(--body-size);font-weight:700;color:#4a3800;">Hải <span style="font-weight:500;color:var(--muted);">— CPO</span></div>
+                            <div style="font-size:var(--small-size);color:var(--muted);">+ Devs + Product Team (11 người)</div>
+                        </div>
+                    </div>
+                    <div class="team-card reveal">
+                        <div class="team-name">🎓 Advisors</div>
+                        <div style="display:flex;flex-direction:column;gap:clamp(3px,.5vw,6px);margin-top:.4em;">
+                            <div style="font-size:var(--body-size);font-weight:700;color:#4a3800;">Công Phùng</div>
+                            <div style="font-size:var(--body-size);font-weight:700;color:#4a3800;">Tú Phạm</div>
+                        </div>
+                    </div>
+                    <div class="team-card reveal">
+                        <div class="team-name">🎯 Milestones với 1.5 tỷ</div>
+                        <div style="display:flex;flex-direction:column;gap:0.4em;margin-top:0.5em">
+                            <div style="font-size:var(--body-size);color:#4a3800;line-height:1.5">✓ 68 paying customers trong Y1</div>
+                            <div style="font-size:var(--body-size);color:#4a3800;line-height:1.5">✓ MRR 132M₫ cuối Y1 2026</div>
+                            <div style="font-size:var(--body-size);color:#4a3800;line-height:1.5">✓ Breakeven đầu Y2 (có outsourcing safety net)</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="slide-nav"><span class="nav-title">The Ask</span><span class="nav-divider"></span><span class="nav-num">09 / 09</span></div>
+    </section>
+
+    <script>
+        class Deck {
+            constructor() {
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.cur = 0;
+                this.bar = document.getElementById('progressBar');
+                this.dots = document.getElementById('navDots');
+                this.init();
+            }
+
+            init() {
+                // Nav dots
+                this.slides.forEach((_, i) => {
+                    const d = document.createElement('button');
+                    d.className = 'nav-dot' + (i===0?' active':'');
+                    d.setAttribute('aria-label', `Slide ${i+1}`);
+                    d.addEventListener('click', () => this.go(i));
+                    this.dots.appendChild(d);
+                });
+                this.dotEls = Array.from(this.dots.querySelectorAll('.nav-dot'));
+
+                // Observer
+                const obs = new IntersectionObserver(entries => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            e.target.classList.add('visible');
+                            const i = this.slides.indexOf(e.target);
+                            if (i !== this.cur) { this.cur = i; this.update(i); }
+                        }
+                    });
+                }, { threshold: 0.6 });
+                this.slides.forEach(s => obs.observe(s));
+
+                // Keyboard
+                document.addEventListener('keydown', e => {
+                    if (['ArrowDown','ArrowRight',' ','PageDown'].includes(e.key)) { e.preventDefault(); this.next(); }
+                    if (['ArrowUp','ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); this.prev(); }
+                    if (e.key==='Home') this.go(0);
+                    if (e.key==='End') this.go(this.slides.length-1);
+                });
+
+                // Touch
+                let y0=0;
+                document.addEventListener('touchstart', e => { y0=e.touches[0].clientY; }, {passive:true});
+                document.addEventListener('touchend', e => {
+                    const dy = y0 - e.changedTouches[0].clientY;
+                    if (Math.abs(dy)>50) dy>0 ? this.next() : this.prev();
+                }, {passive:true});
+
+                // Wheel
+                let t;
+                document.addEventListener('wheel', e => {
+                    e.preventDefault();
+                    clearTimeout(t);
+                    t = setTimeout(() => e.deltaY>0 ? this.next() : this.prev(), 50);
+                }, {passive:false});
+
+                // Boot
+                setTimeout(() => this.slides[0]?.classList.add('visible'), 100);
+            }
+
+            next() { if (this.cur < this.slides.length-1) this.go(this.cur+1); }
+            prev() { if (this.cur > 0) this.go(this.cur-1); }
+
+            go(i) {
+                this.cur = i;
+                this.slides[i].scrollIntoView({behavior:'smooth'});
+                this.update(i);
+            }
+
+            update(i) {
+                this.dotEls.forEach((d,j) => d.classList.toggle('active', j===i));
+                this.bar.style.width = (this.slides.length>1 ? i/(this.slides.length-1)*100 : 100) + '%';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => new Deck());
+    </script>
+</body>
+</html>
