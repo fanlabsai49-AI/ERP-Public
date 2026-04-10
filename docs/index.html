@@ -9,180 +9,75 @@
     <style>
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
         body {
-            font-family: 'Be Vietnam Pro', sans-serif;
-            background: #FFFDF7;
-            color: #1a1000;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem 1.5rem;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background: #FFFDF7; color: #1a1000;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 2rem 1.5rem;
         }
-
-        .container {
-            max-width: 560px;
-            width: 100%;
-        }
-
-        .logo-row {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 2.5rem;
-        }
-
+        .container { max-width: 560px; width: 100%; }
+        .logo-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2.5rem; }
         .logo-icon {
-            width: 44px; height: 44px;
-            background: linear-gradient(135deg, #B8860B 0%, #FFD700 50%, #B8860B 100%);
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px;
-            box-shadow: 0 4px 12px rgba(184,134,11,0.35);
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, #B8860B 0%, #FFD700 50%, #B8860B 100%);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 12px rgba(184,134,11,0.35);
         }
-
         .logo-text {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #B8860B 0%, #D4A843 50%, #996B00 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
+  font-size: 1.4rem; font-weight: 800;
+  background: linear-gradient(135deg, #B8860B 0%, #D4A843 50%, #996B00 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  letter-spacing: -0.02em;
         }
-
-        .logo-sub {
-            font-size: 0.75rem;
-            color: #8B7355;
-            font-weight: 500;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            margin-top: 1px;
-        }
-
-        h1 {
-            font-size: clamp(1.5rem, 5vw, 2rem);
-            font-weight: 800;
-            color: #1a1000;
-            margin-bottom: 0.4rem;
-            line-height: 1.2;
-        }
-
-        .subtitle {
-            font-size: 0.9rem;
-            color: #8B7355;
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-
-        .doc-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
+        .logo-sub { font-size: 0.75rem; color: #8B7355; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 1px; }
+        h1 { font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 800; color: #1a1000; margin-bottom: 0.4rem; line-height: 1.2; }
+        .subtitle { font-size: 0.9rem; color: #8B7355; margin-bottom: 2rem; font-weight: 500; }
+        .doc-list { display: flex; flex-direction: column; gap: 0.75rem; }
         .doc-link {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.25rem;
-            background: #FFFFFF;
-            border: 1px solid rgba(184,134,11,0.15);
-            border-left: 3px solid rgba(184,134,11,0.5);
-            border-radius: 6px;
-            text-decoration: none;
-            color: inherit;
-            transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(184,134,11,0.15);
+  border-left: 3px solid rgba(184,134,11,0.5);
+  border-radius: 6px; text-decoration: none; color: inherit;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
         }
-
-        .doc-link:hover {
-            box-shadow: 0 4px 20px rgba(184,134,11,0.15);
-            border-left-color: #B8860B;
-            transform: translateY(-1px);
-        }
-
-        .doc-icon {
-            font-size: 1.4rem;
-            flex-shrink: 0;
-        }
-
+        .doc-link:hover { box-shadow: 0 4px 20px rgba(184,134,11,0.15); border-left-color: #B8860B; transform: translateY(-1px); }
+        .doc-icon { font-size: 1.4rem; flex-shrink: 0; }
         .doc-info { flex: 1; min-width: 0; }
-
-        .doc-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #1a1000;
-            margin-bottom: 2px;
-        }
-
-        .doc-desc {
-            font-size: 0.78rem;
-            color: #8B7355;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .doc-arrow {
-            color: #B8860B;
-            opacity: 0.6;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .footer {
-            margin-top: 2.5rem;
-            font-size: 0.75rem;
-            color: #B8A080;
-            text-align: center;
-        }
-
-        .badge-confidential {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35em;
-            padding: 0.25em 0.75em;
-            background: rgba(220,38,38,0.06);
-            border: 1px solid rgba(220,38,38,0.2);
-            border-radius: 3px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #b91c1c;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-        }
+        .doc-title { font-size: 0.95rem; font-weight: 700; color: #1a1000; }
+        .doc-arrow { color: #B8860B; opacity: 0.6; font-size: 1rem; flex-shrink: 0; }
+        .footer { margin-top: 2.5rem; font-size: 0.75rem; color: #B8A080; text-align: center; }
+        .badge { display: inline-flex; align-items: center; gap: 0.35em; padding: 0.25em 0.75em; background: rgba(220,38,38,0.06); border: 1px solid rgba(220,38,38,0.2); border-radius: 3px; font-size: 0.7rem; font-weight: 700; color: #b91c1c; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.5rem; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo-row">
-            <div class="logo-icon">🏅</div>
-            <div>
-                <div class="logo-text">ERPGold</div>
-                <div class="logo-sub">ERP SaaS · Kim Loại Quý · Việt Nam</div>
-            </div>
+  <div class="logo-icon">🏅</div>
+  <div>
+      <div class="logo-text">ERPGold</div>
+      <div class="logo-sub">ERP SaaS · Kim Loại Quý · Việt Nam</div>
+  </div>
         </div>
-
-        <span class="badge-confidential">🔒 Confidential — For Investors Only</span>
-
+        <span class="badge">🔒 Confidential — For Investors Only</span>
         <h1>Tài liệu Đầu tư</h1>
         <p class="subtitle">Investor documents · Series A Pre-seed · 2026</p>
-
         <div class="doc-list">
-            <a class="doc-link" href="Pitchdeck.html">
-                <span class="doc-icon">📊</span>
-                <div class="doc-info">
-                    <div class="doc-title">Investor Pitch Deck</div>
-                    <div class="doc-desc">TAM/SAM/SOM · Product · Team · Financials · Ask</div>
-                </div>
-                <span class="doc-arrow">→</span>
-            </a>
+        <a class="doc-link" href="Pitchdeck.html">
+  <span class="doc-icon">📊</span>
+  <div class="doc-info">
+      <div class="doc-title">Pitchdeck</div>
+  </div>
+  <span class="doc-arrow">→</span>
+        </a>
         </div>
-
         <div class="footer">
-            © 2026 Fansipan Labs. All rights reserved.<br>
-            Tài liệu này chỉ dành cho nhà đầu tư được mời.
+  © 2026 Fansipan Labs. All rights reserved.<br>
+  Tài liệu này chỉ dành cho nhà đầu tư được mời.
         </div>
     </div>
 </body>
