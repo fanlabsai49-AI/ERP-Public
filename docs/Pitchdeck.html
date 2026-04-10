@@ -142,9 +142,8 @@
             /* Market grid compact */
             #slide-2 .market-grid { gap:clamp(0.4rem,1.5vw,0.7rem); margin-bottom:clamp(0.5rem,1.5vw,0.7rem); }
             #slide-2 .market-card { padding:clamp(0.5rem,2vw,0.9rem)!important; }
-            /* Giới hạn chiều cao SVG trong card — tránh render quá to khi full-width */
-            #slide-2 .market-card svg { max-height:70px; }
-            #slide-2 .market-card svg[viewBox="0 0 160 160"] { max-height:90px; }
+            /* SVG charts — để tự nhiên theo width 430px, slide đã scroll được */
+            #slide-2 .market-card svg { max-height:none; width:100%; }
             /* Ẩn bottom row (pie + compliance) — giữ lại 3 cards chính */
             #slide-2 .s2-bottom-row { display:none!important; }
         }
