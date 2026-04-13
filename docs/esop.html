@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FANLABS ESOP PROGRAM 2026</title>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=be-vietnam-pro:300,400,500,600,700,800,900|playfair-display:700,800,900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy:#f4f7ff; --navy2:#eaf0ff; --navy3:#dce7ff;
+            --blue:#2563eb; --blue-light:#1d4ed8; --blue-bright:#3b82f6;
+            --green:#16a34a; --green-dim:#15803d;
+            --amber:#d97706; --red:#dc2626;
+            --white:#0f172a; --off-white:#1e3a5f; --muted:#64748b;
+            --border:rgba(37,99,235,0.15);
+            --font:'Be Vietnam Pro',sans-serif;
+            --title-size:clamp(3rem,7vw,6.5rem);
+            --h2-size:clamp(2rem,4.5vw,4rem);
+            --h3-size:clamp(1.1rem,1.6vw,1.6rem);
+            --stat-size:clamp(2.5rem,5.5vw,5rem);
+            --body-size:clamp(0.9rem,1.3vw,1.25rem);
+            --small-size:clamp(0.78rem,1vw,1rem);
+            --label-size:clamp(0.65rem,0.8vw,0.82rem);
+            --pad:clamp(2rem,4.5vw,4.5rem);
+            --gap:clamp(0.7rem,1.4vw,1.4rem);
+            --egap:clamp(0.3rem,0.7vw,0.8rem);
+            --ease:cubic-bezier(0.16,1,0.3,1);
+        }
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html,body{height:100%;overflow-x:hidden;max-width:100vw}
+        html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+        body{font-family:var(--font);background:#f8faff;color:#0f172a;-webkit-font-smoothing:antialiased}
+
+        .slide{width:100vw;height:100vh;height:100dvh;overflow:hidden;scroll-snap-align:start;display:flex;flex-direction:column;position:relative;background:#f8faff;max-width:100vw}
+        .slide::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 90% 70% at 100% 0%,rgba(37,99,235,.08) 0%,transparent 50%),radial-gradient(ellipse 70% 60% at 0% 100%,rgba(22,163,74,.05) 0%,transparent 50%),var(--navy)}
+        .slide::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(37,99,235,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.06) 1px,transparent 1px);background-size:64px 64px}
+        .slide-content,.slide>*:not(.slide-bg){position:relative;z-index:1}
+        .slide-content{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;max-height:100%;overflow:hidden;padding:var(--pad)}
+
+        .slide-label{position:fixed;top:clamp(.6rem,1.5vw,1rem);right:clamp(.6rem,1.5vw,1rem);font-size:var(--label-size);font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;z-index:100;white-space:nowrap;background:rgba(248,250,255,.9);padding:2px 8px;border-radius:3px;pointer-events:none;}
+        .slide-number{position:absolute;bottom:clamp(.8rem,2vw,1.5rem);right:clamp(.8rem,2vw,1.5rem);font-size:var(--label-size);font-weight:600;color:var(--muted);z-index:10}
+
+        .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+        .slide.visible .reveal{opacity:1;transform:none}
+        .stagger>*:nth-child(1){transition-delay:.05s}.stagger>*:nth-child(2){transition-delay:.15s}.stagger>*:nth-child(3){transition-delay:.25s}.stagger>*:nth-child(4){transition-delay:.35s}.stagger>*:nth-child(5){transition-delay:.45s}.stagger>*:nth-child(6){transition-delay:.55s}
+
+        .chip{display:inline-flex;align-items:center;gap:.4em;padding:.3em .9em;background:#dbeafe;border:1px solid rgba(59,130,246,.4);border-radius:3px;font-size:var(--label-size);font-weight:600;color:var(--blue-light);letter-spacing:.1em;text-transform:uppercase}
+        .chip.green{background:#dcfce7;border-color:rgba(34,197,94,.35);color:var(--green)}
+        .chip.amber{background:#fef3c7;border-color:rgba(245,158,11,.35);color:var(--amber)}
+        .chip.red{background:#fee2e2;border-color:rgba(239,68,68,.3);color:var(--red)}
+
+        .progress-bar{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--blue),var(--green));z-index:1000;transition:width .3s}
+        .nav-dots{position:fixed;right:clamp(.8rem,2vw,1.5rem);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:.45rem;z-index:999}
+        .nav-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);cursor:pointer;transition:all .3s;border:none;padding:0}
+        .nav-dot.active{background:var(--green);transform:scale(1.6)}
+
+        /* Cards */
+        .card{background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:clamp(.8rem,1.4vw,1.4rem)}
+        .card.blue-top{border-top:3px solid var(--blue-bright)}
+        .card.green-top{border-top:3px solid var(--green)}
+        .card.amber-top{border-top:3px solid var(--amber)}
+        .card.red-top{border-top:3px solid var(--red)}
+        .card:hover{background:#f8faff}
+
+        .stat-num{font-size:var(--stat-size);font-weight:900;line-height:1;margin-bottom:.15em}
+        .stat-num .unit{font-size:.45em;font-weight:700;vertical-align:top;margin-top:.2em;display:inline-block}
+
+        .insight-bar{padding:clamp(.7rem,1.2vw,1.1rem) clamp(.9rem,1.8vw,1.5rem);background:#eff6ff;border:1px solid rgba(59,130,246,.25);border-left:3px solid var(--blue-bright);border-radius:4px;font-size:var(--body-size);font-weight:500;color:var(--off-white);line-height:1.6}
+        .insight-bar strong{color:var(--green)}
+        .insight-bar.green-bar{background:#f0fdf4;border-color:rgba(34,197,94,.25);border-left-color:var(--green)}
+        .insight-bar.amber-bar{background:#fffbeb;border-color:rgba(245,158,11,.25);border-left-color:var(--amber)}
+
+        .src{font-size:var(--label-size);color:var(--muted);font-style:italic;margin-top:auto;padding-top:6px}
+
+        /* Problem items */
+        .problem-item{display:flex;align-items:flex-start;gap:.7em;padding:clamp(.7rem,1.2vw,1.1rem);background:#fef2f2;border:1px solid rgba(239,68,68,.2);border-radius:4px}
+        .why-item{display:flex;align-items:flex-start;gap:.7em;padding:clamp(.7rem,1.2vw,1.1rem);background:#f0fdf4;border:1px solid rgba(34,197,94,.2);border-radius:4px}
+        .item-icon{font-size:clamp(1.2rem,1.8vw,1.6rem);flex-shrink:0}
+        .item-text strong{display:block;font-size:var(--h3-size);font-weight:700;color:var(--off-white);margin-bottom:.15em}
+        .item-text span{font-size:var(--body-size);color:#475569;line-height:1.4}
+        .why-item .item-text span{color:#14532d}
+
+        /* Feature grid */
+        .tier-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.4rem,.9vw,.8rem)}
+        .tier-card{background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:clamp(.7rem,1.2vw,1.1rem)}
+        .tier-card.highlight{background:#dbeafe;border-color:var(--blue)}
+        .tier-name{font-size:var(--label-size);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.2em}
+        .tier-price{font-size:clamp(1.2rem,2.2vw,1.8rem);font-weight:900;margin-bottom:.3em}
+        .tier-price .unit{font-size:.5em;color:var(--muted);font-weight:500}
+        .tier-feat{list-style:none;padding:0}
+        .tier-feat li{font-size:var(--small-size);padding:2px 0 2px 16px;position:relative;color:#475569}
+        .tier-feat li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:700}
+
+        /* Roadmap */
+        .rm-item{display:flex;align-items:flex-start;gap:.9em;padding:clamp(.7rem,1.2vw,1rem);background:#fff;border:1px solid #e2e8f0;border-radius:4px}
+        .rm-item.active{background:#dbeafe;border-color:var(--blue)}
+        .rm-phase{flex-shrink:0;width:clamp(55px,6vw,80px);font-size:var(--label-size);font-weight:700;color:var(--blue-light);text-transform:uppercase;letter-spacing:.1em;padding-top:.1em}
+        .rm-item.active .rm-phase{color:var(--green)}
+        .rm-text strong{display:block;font-size:var(--h3-size);font-weight:700;color:var(--off-white);margin-bottom:.1em}
+        .rm-text span{font-size:var(--body-size);color:#475569;line-height:1.4}
+
+        /* ESOP pie */
+        .esop-cols{display:grid;grid-template-columns:auto 1fr;gap:clamp(1.5rem,3vw,2.5rem);align-items:center}
+        .legend-item{display:flex;align-items:center;gap:.6em;margin-bottom:clamp(.4rem,.7vw,.6rem);font-size:var(--body-size);font-weight:500;color:var(--off-white)}
+        .legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+        .legend-val{font-weight:800;min-width:50px}
+
+        /* Comparison */
+        .cmp-row{display:flex;align-items:center;gap:10px;margin-bottom:clamp(4px,.8vh,8px)}
+        .cmp-label{font-size:var(--small-size);font-weight:600;min-width:clamp(60px,8vw,80px);text-align:right;color:var(--muted)}
+        .cmp-track{flex:1;height:clamp(28px,3.5vh,36px);background:#f1f5f9;border-radius:4px;overflow:hidden;display:flex}
+        .cmp-fill{height:100%;display:flex;align-items:center;justify-content:center;font-size:var(--small-size);font-weight:800;color:#fff;border-radius:4px;min-width:28px}
+
+        /* Scenario */
+        .scenario-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(.4rem,.9vw,.8rem);max-width:500px}
+        .scenario-card{background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:clamp(.6rem,1.1vw,.9rem);text-align:center}
+        .sc-label{font-size:var(--label-size);color:var(--muted);font-weight:500}
+        .sc-val{font-size:clamp(1.2rem,2.2vw,1.8rem);font-weight:900;margin:3px 0}
+        .sc-pct{font-size:var(--small-size);font-weight:800}
+
+        /* === ANCARAT HIGHLIGHT PULSE === */
+        .ancarat-highlight{animation:ancarat-glow 2s ease-in-out infinite alternate;}
+        @keyframes ancarat-glow{
+            0%{box-shadow:0 0 8px rgba(22,163,74,.15),0 2px 12px rgba(22,163,74,.1);}
+            100%{box-shadow:0 0 20px rgba(22,163,74,.3),0 4px 24px rgba(22,163,74,.2);}
+        }
+        .ancarat-pulse{position:absolute;top:8px;right:8px;width:10px;height:10px;border-radius:50%;background:var(--green);}
+        .ancarat-pulse::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--green);animation:pulse-ring 1.5s ease-out infinite;}
+        @keyframes pulse-ring{0%{transform:scale(1);opacity:.8;}100%{transform:scale(2.2);opacity:0;}}
+
+        /* === MOBILE RESPONSIVE === */
+
+        /* Tablet portrait */
+        @media(max-width:768px){
+            :root{--pad:clamp(1rem,3vw,2rem);--gap:clamp(.5rem,1.2vw,1rem);--title-size:clamp(1.8rem,7vw,3rem);--h2-size:clamp(1.4rem,5vw,2.2rem);--h3-size:clamp(.95rem,2.5vw,1.3rem);--body-size:clamp(.8rem,2.2vw,1rem);--small-size:clamp(.7rem,1.8vw,.85rem);--label-size:clamp(.6rem,1.5vw,.75rem);--stat-size:clamp(1.8rem,6vw,3rem);}
+            .tier-grid{grid-template-columns:1fr 1fr}
+            .esop-cols{grid-template-columns:1fr;text-align:center;}
+            .esop-cols svg{margin:0 auto;}
+            .scenario-grid{grid-template-columns:1fr 1fr;max-width:100%!important;}
+        }
+
+        /* Mobile phone */
+        @media(max-width:480px){
+            :root{--pad:clamp(.8rem,4vw,1.5rem);--gap:clamp(.4rem,2vw,.8rem);--title-size:clamp(1.5rem,8vw,2.5rem);--h2-size:clamp(1.2rem,6vw,1.8rem);--h3-size:clamp(.85rem,3vw,1.1rem);--body-size:clamp(.75rem,2.8vw,.95rem);--small-size:clamp(.65rem,2.2vw,.8rem);--label-size:clamp(.55rem,2vw,.7rem);--stat-size:clamp(1.5rem,8vw,2.5rem);}
+            /* tier grid keep 2 col on mobile */
+            .tier-grid{grid-template-columns:1fr 1fr!important;}
+            .scenario-grid{grid-template-columns:1fr!important;}
+            /* Slide 2,3,4 2-col layouts → stack */
+            .slide-content [style*="grid-template-columns:1fr 1fr"],
+            .slide-content [style*="grid-template-columns:3fr 2fr"]{
+                display:flex!important;flex-direction:column!important;
+            }
+            /* 6-col moat grid → 3x2 */
+            .slide-content [style*="repeat(6,1fr)"]{
+                grid-template-columns:repeat(3,1fr)!important;
+            }
+            /* Pie chart smaller */
+            .esop-cols svg{max-width:120px!important;max-height:120px!important;}
+            /* Nav dots hide */
+            .nav-dots{display:none;}
+            /* Bar chart slide center */
+            #s8 .slide-content{align-items:center!important;text-align:center!important;}
+            #s8 .slide-content>div{width:100%!important;max-width:100%!important;}
+            #s8 svg{width:100%!important;max-width:100%!important;}
+            /* Chip wrap */
+            .chip{font-size:clamp(.55rem,2vw,.7rem);padding:.25em .6em;}
+            /* Cards tighter padding */
+            .card,.problem-item,.why-item,.rm-item{padding:clamp(.5rem,2vw,.8rem)!important;}
+            .item-icon{font-size:clamp(1rem,4vw,1.3rem)!important;}
+            /* Roadmap timeline grid scroll */
+            .slide-content [style*="min-width:700px"]{min-width:550px!important;}
+        }
+
+        /* Short screens (landscape phone) */
+        @media(max-height:700px){
+            :root{--pad:clamp(1rem,2.5vw,2rem);--gap:clamp(.4rem,.8vw,.8rem);--title-size:clamp(1.5rem,4.5vw,2.5rem);--h2-size:clamp(1.2rem,3vw,2rem);--stat-size:clamp(1.5rem,3.5vw,2.5rem);}
+            .nav-dots{display:none;}
+        }
+        @media(max-height:500px){
+            :root{--pad:clamp(.5rem,2vw,1rem);--title-size:clamp(1.2rem,3.5vw,1.8rem);--h2-size:clamp(1rem,2.5vw,1.5rem);--body-size:clamp(.65rem,1.5vw,.85rem);}
+        }
+
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}html{scroll-behavior:auto}}
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <nav class="nav-dots" id="navDots"></nav>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 1 — COVER                                              -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s1">
+        <div class="slide-content stagger">
+            <div class="reveal" style="display:inline-flex;align-items:center;gap:.5em;padding:.4em 1.1em;border:1px solid rgba(34,197,94,.5);background:#f0fdf4;border-radius:3px;font-size:var(--label-size);font-weight:700;color:var(--green);letter-spacing:.12em;text-transform:uppercase;margin-bottom:var(--egap);">🌱 ESOP Program · Đang triển khai</div>
+            <div class="reveal" style="margin-bottom:var(--gap);">
+    <img src="data:image/png;base64,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" alt="Fanlabs" style="max-height:clamp(50px,7vh,90px);max-width:320px;object-fit:contain;display:block;">
+    <div style="
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: var(--title-size);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: .02em;
+        margin-top: clamp(.3rem,.8vw,.6rem);
+        background: linear-gradient(170deg, #F5D060 0%, #E8B828 15%, #D4A017 30%, #C49000 45%, #E8C840 55%, #F5D868 65%, #D4A520 78%, #B8860B 90%, #C89830 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        -webkit-text-stroke: 1px rgba(139,107,0,.3);
+        filter: drop-shadow(0 2px 0px rgba(101,67,0,.6)) drop-shadow(0 4px 8px rgba(101,67,0,.35)) drop-shadow(0 1px 0px rgba(255,215,0,.4));
+        display: inline-block;
+        position: relative;
+    ">ESOP PROGRAM</div>
+    <div style="color:var(--green);font-size:var(--h3-size);font-weight:700;margin-top:.3em;">2026</div>
+</div>
+            <p class="reveal" style="font-size:var(--body-size);color:var(--off-white);max-width:520px;line-height:1.6;margin-bottom:var(--gap);">Nền tảng ERP chuyên biệt đầu tiên cho ngành Kim Loại Quý Việt Nam. Đã vận hành tại chuỗi Ancarat.</p>
+            <div class="reveal" style="display:flex;gap:var(--gap);">
+                <div><div style="font-size:clamp(1.6rem,3.5vw,3rem);font-weight:800;line-height:1;">11</div><div style="font-size:var(--label-size);color:var(--muted);margin-top:.2em;">Core Team</div></div>
+                <div style="width:1px;background:#eff6ff;align-self:stretch;margin:0 .5em;"></div>
+                <div><div style="font-size:clamp(1.6rem,3.5vw,3rem);font-weight:800;line-height:1;color:var(--green);">15<span style="font-size:.5em;font-weight:600;color:var(--blue-light);">%</span></div><div style="font-size:var(--label-size);color:var(--muted);margin-top:.2em;">ESOP Pool</div></div>
+                <div style="width:1px;background:#eff6ff;align-self:stretch;margin:0 .5em;"></div>
+                <div><div style="font-size:clamp(1.6rem,3.5vw,3rem);font-weight:800;line-height:1;">14<span style="font-size:.5em;font-weight:600;color:var(--blue-light);">W</span></div><div style="font-size:var(--label-size);color:var(--muted);margin-top:.2em;">Go-Live</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 2 — TẠI SAO PHẢI LÀM PRODUCT?                        -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s1b">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip red reveal">⚠️ Tại sao phải làm Product?</span>
+                <h2 class="reveal" style="font-size:var(--h2-size);font-weight:800;line-height:1.05;margin-bottom:var(--gap);">Outsourcing đang <span style="color:var(--red);">mất lợi thế</span></h2>
+            </div>
+            <div style="display:grid;grid-template-columns:3fr 2fr;gap:var(--gap);">
+                <!-- Chart: Margin giảm -->
+                <div class="reveal">
+                    <div style="font-size:var(--h3-size);font-weight:800;color:var(--off-white);margin-bottom:clamp(.5rem,1vw,.8rem);">📉 Margin ngành gia công đang co lại</div>
+                    <!-- SVG bar chart: IT services margin trend -->
+                    <svg viewBox="0 0 500 240" preserveAspectRatio="xMidYMid meet" style="width:100%;">
+                        <!-- Grid -->
+                        <line x1="70" y1="20" x2="70" y2="195" stroke="#e2e8f0" stroke-width="1"/>
+                        <line x1="70" y1="195" x2="470" y2="195" stroke="#e2e8f0" stroke-width="1"/>
+                        <line x1="70" y1="65" x2="470" y2="65" stroke="#e2e8f0" stroke-width=".5" stroke-dasharray="3"/>
+                        <line x1="70" y1="130" x2="470" y2="130" stroke="#e2e8f0" stroke-width=".5" stroke-dasharray="3"/>
+                        <text x="63" y="68" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Be Vietnam Pro">30%</text>
+                        <text x="63" y="133" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Be Vietnam Pro">15%</text>
+                        <text x="63" y="198" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Be Vietnam Pro">0%</text>
+                        <!-- Bars wider -->
+                        <rect x="95" y="68" width="65" height="127" rx="4" fill="#3b82f6"/>
+                        <text x="127" y="58" text-anchor="middle" font-size="14" fill="#3b82f6" font-weight="800" font-family="Be Vietnam Pro">28.6%</text>
+                        <text x="127" y="214" text-anchor="middle" font-size="12" fill="#0f172a" font-weight="600" font-family="Be Vietnam Pro">2020</text>
+                        
+                        <rect x="185" y="84" width="65" height="111" rx="4" fill="#3b82f6" opacity=".8"/>
+                        <text x="217" y="74" text-anchor="middle" font-size="14" fill="#3b82f6" font-weight="800" font-family="Be Vietnam Pro">24.3%</text>
+                        <text x="217" y="214" text-anchor="middle" font-size="12" fill="#0f172a" font-weight="600" font-family="Be Vietnam Pro">2022</text>
+                        
+                        <rect x="275" y="112" width="65" height="83" rx="4" fill="#d97706"/>
+                        <text x="307" y="102" text-anchor="middle" font-size="14" fill="#d97706" font-weight="800" font-family="Be Vietnam Pro">~18%</text>
+                        <text x="307" y="214" text-anchor="middle" font-size="12" fill="#0f172a" font-weight="600" font-family="Be Vietnam Pro">2024</text>
+                        
+                        <rect x="365" y="142" width="65" height="53" rx="4" fill="#dc2626"/>
+                        <text x="397" y="132" text-anchor="middle" font-size="14" fill="#dc2626" font-weight="800" font-family="Be Vietnam Pro">10-12%</text>
+                        <text x="397" y="214" text-anchor="middle" font-size="12" fill="#0f172a" font-weight="600" font-family="Be Vietnam Pro">2025</text>
+                        
+                        <!-- Trend arrow -->
+                        <line x1="127" y1="72" x2="390" y2="144" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="5 3"/>
+                        <polygon points="395,142 387,134 387,150" fill="#dc2626"/>
+                    </svg>
+                    <div style="font-size:var(--label-size);color:var(--muted);font-style:italic;margin-top:4px;">Nguồn: Staffing Industry Analysts, Field Nation 2024</div>
+                </div>
+
+                <!-- Bullet points -->
+                <div style="display:flex;flex-direction:column;gap:clamp(.4rem,.8vw,.7rem);" class="stagger">
+                    <div class="problem-item reveal"><span class="item-icon">🤖</span><div class="item-text"><strong>AI đạp giá, giảm margin nghiêm trọng</strong><span>AI automate 60-70% tasks — client trả ít hơn. Margin từ 28% → 10-12%</span></div></div>
+                    <div class="problem-item reveal"><span class="item-icon">💸</span><div class="item-text"><strong>Khô áo ráo cơm, thiếu tích lũy</strong><span>Lương tăng 10-15%/năm nhưng margin giảm → cắt thưởng, giảm phúc lợi. Nghỉ = tay trắng</span></div></div>
+                    <div class="problem-item reveal"><span class="item-icon">📊</span><div class="item-text"><strong>25% IT work do AI thay thế tới năm 2030</strong><span>Gartner: chỉ dev có product ownership mới an toàn</span></div></div>
+                    <div class="why-item reveal"><span class="item-icon">💡</span><div class="item-text"><strong>Product = Tích lũy + Upside</strong><span>Mỗi dòng code tạo ra tài sản</span></div></div>
+                </div>
+            </div>
+
+            <div class="src reveal">Nguồn: Gartner 2025, McKinsey State of AI 2025, Staffing Industry Analysts, Robert Walters VN</div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 3 — WHY GOLD ERP?                                     -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s3">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip reveal">Tại sao ERP Kim Loại Quý?</span>
+                <h2 class="reveal" style="font-size:var(--h2-size);font-weight:800;line-height:1.05;margin-bottom:var(--gap);">Ngành <span style="color:var(--blue-light);">$4.3B</span>, chưa có ai làm đúng</h2>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);">
+                <!-- Vấn đề ngành -->
+                <div style="display:flex;flex-direction:column;gap:clamp(.4rem,.8vw,.7rem);" class="stagger">
+                    <div style="font-size:var(--h3-size);font-weight:800;color:var(--red);margin-bottom:.1em;" class="reveal">🔍 Ngành KD Kim loại quý đang bị bỏ lại</div>
+                    <div class="problem-item reveal"><span class="item-icon">📋</span><div class="item-text"><strong>90% cơ sở kinh doanh kim loại quý chưa chuẩn hoá</strong><span>Quản lý Excel, phần mềm cũ — chưa chuẩn hoá xuất hoá đơn tự động, không tích hợp phần mềm kế toán</span></div></div>
+                    <div class="problem-item reveal"><span class="item-icon">⚖️</span><div class="item-text"><strong>Pháp lý buộc chuyển đổi số</strong><span>Nghị định 2025: HĐĐT bắt buộc mọi giao dịch vàng — TẤT CẢ tiệm PHẢI số hóa, không ngoại lệ</span></div></div>
+                    <div class="problem-item reveal"><span class="item-icon">🏚️</span><div class="item-text"><strong>Phần mềm hiện tại: lỗi thời</strong><span>On-premise từ 2000s, không cloud, không tích hợp nghiệp vụ đặc thù ngành KD Kim loại quý</span></div></div>
+                </div>
+                <!-- Tại sao Fanlabs thắng -->
+                <div style="display:flex;flex-direction:column;gap:clamp(.4rem,.8vw,.7rem);" class="stagger">
+                    <div style="font-size:var(--h3-size);font-weight:800;color:var(--green);margin-bottom:.1em;" class="reveal">🏆 Fanlabs có lợi thế độc nhất</div>
+                    <div class="why-item reveal"><span class="item-icon">🥇</span><div class="item-text"><strong>Đã vận hành tại Ancarat</strong><span>Chuỗi kim hoàn hàng đầu VN, ~1.000 tỷ/tháng — proof of concept không ai có được</span></div></div>
+                    <div class="why-item reveal"><span class="item-icon">🚫</span><div class="item-text"><strong>Không có đối thủ quá lớn trực tiếp</strong><span>Blue ocean — rất ít giải pháp SaaS chuyên biệt cho ngành KD Kim loại quý tại Việt Nam</span></div></div>
+                    <div class="why-item reveal"><span class="item-icon">📈</span><div class="item-text"><strong>Ngành kim loại quý $4.3B — TAM phần mềm ~400 tỷ₫/năm</strong><span>~18.000 cơ sở tiềm năng · SAM ~350 tỷ₫/năm (luật HĐĐT bắt buộc)</span></div></div>
+                </div>
+            </div>
+            <div class="src reveal">Nguồn: IMARC Group 2024, LBMA, Ken Research, VietnamNews</div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 4 — SOLUTION VALUE                                     -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s4">
+        <div class="slide-content" style="align-items:center;text-align:center;">
+            <div class="stagger">
+                <span class="chip green reveal">Giá Trị Khác Biệt</span>
+                <h2 class="reveal" style="font-size:var(--h2-size);font-weight:800;line-height:1.05;margin-bottom:var(--gap);">5 lý do <span style="color:var(--green);">tạo khác biệt</span></h2>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(.5rem,1.2vw,1rem);width:100%;max-width:900px;margin:0 auto;" class="stagger">
+
+                <!-- #1 ANCARAT — full width, nền nổi bật -->
+                <div class="card reveal ancarat-highlight" style="display:flex;gap:.8em;align-items:flex-start;grid-column:1/-1;border:2px solid var(--green);border-top:4px solid var(--green);background:linear-gradient(105deg,#052e16,#14532d);position:relative;overflow:hidden;">
+                    <img src="data:image/jpeg;base64,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" style="width:clamp(40px,5vw,60px);height:clamp(40px,5vw,60px);object-fit:contain;flex-shrink:0;border-radius:6px;">
+                    <div>
+                        <div style="font-size:var(--h3-size);font-weight:900;color:#4ade80;margin-bottom:.3em;">Thực chiến từ Ancarat</div>
+                        <div style="font-size:var(--body-size);color:#dcfce7;font-weight:600;line-height:1.6;">Xây dựng từ thực tế vận hành chuỗi <strong style="color:#4ade80;">10 chi nhánh + 200 đại lý</strong> · Doanh thu <strong style="color:#4ade80;">~12.000 tỷ/năm</strong> — không phải lý thuyết, đã qua kiểm chứng thực tế</div>
+                    </div>
+                    <div class="ancarat-pulse"></div>
+                </div>
+
+                <!-- #2 MISA -->
+                <div class="card blue-top reveal" style="display:flex;gap:.8em;align-items:flex-start;">
+                    <img src="data:image/jpeg;base64,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" style="width:clamp(36px,4.5vw,52px);height:clamp(36px,4.5vw,52px);object-fit:contain;flex-shrink:0;border-radius:6px;">
+                    <div>
+                        <div style="font-size:var(--h3-size);font-weight:800;color:var(--blue-light);margin-bottom:.2em;">Tự động hoá toàn trình với MISA</div>
+                        <div style="font-size:var(--body-size);color:#475569;">Giải pháp duy nhất tích hợp MISA AMIS native — HĐĐT phát sinh tự động, tuân thủ nghị định 2025</div>
+                    </div>
+                </div>
+
+                <!-- #3 RFID -->
+                <div class="card amber-top reveal" style="display:flex;gap:.8em;align-items:flex-start;">
+                    <div style="font-size:clamp(1.6rem,2.8vw,2.2rem);flex-shrink:0;">🏷️</div>
+                    <div>
+                        <div style="font-size:var(--h3-size);font-weight:800;color:var(--amber);margin-bottom:.2em;">RFID kiểm kho 1.000 SP / 30 giây</div>
+                        <div style="font-size:var(--body-size);color:#475569;">Thay thế 2-4 giờ kiểm kho thủ công mỗi ngày — chính xác tuyệt đối, phát hiện thất thoát tức thì</div>
+                    </div>
+                </div>
+
+                <div class="card reveal" style="display:flex;gap:.8em;align-items:flex-start;border-top:3px solid #7c3aed;">
+                    <div style="font-size:clamp(1.6rem,2.8vw,2.2rem);flex-shrink:0;">⚖️</div>
+                    <div>
+                        <div style="font-size:var(--h3-size);font-weight:800;color:#7c3aed;margin-bottom:.2em;">Tích hợp cân điện tử phổ biến</div>
+                        <div style="font-size:var(--body-size);color:#475569;">Driver native cho Shinko, Vibra, Sartorius, Shimadzu — cân đọc trọng lượng thẳng vào hệ thống, không sai sót</div>
+                    </div>
+                </div>
+
+                <div class="card reveal" style="display:flex;gap:.8em;align-items:flex-start;border-top:3px solid var(--blue-bright);grid-column:1/-1;">
+                    <div style="font-size:clamp(1.6rem,2.8vw,2.2rem);flex-shrink:0;">☁️</div>
+                    <div>
+                        <div style="font-size:var(--h3-size);font-weight:800;color:var(--blue-bright);margin-bottom:.2em;">SaaS — không đầu tư phần cứng, nâng cấp tự động</div>
+                        <div style="font-size:var(--body-size);color:#475569;">Không cần bỏ 50-100M mua phần mềm. Trả theo tháng, tính năng mới tự cập nhật, mở chi nhánh không cần cài đặt lại</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 5 — FEATURES                                           -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s5">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip green reveal">Gói Dịch Vụ</span>
+                <h2 class="reveal" style="font-size:var(--h2-size);font-weight:800;line-height:1.05;margin-bottom:var(--gap);">SaaS recurring — <span style="color:var(--green);">4 gói</span></h2>
+            </div>
+            <div class="tier-grid stagger">
+                <div class="tier-card reveal"><div class="tier-name" style="color:var(--muted);">Lite</div><div class="tier-price">500K<span class="unit">₫/th (Y2)</span></div><ul class="tier-feat"><li>POS Bán lẻ/Sỉ</li><li>Tồn kho · HĐĐT</li><li>Báo cáo cuối ngày</li><li>2 users · 1 CH</li></ul></div>
+                <div class="tier-card highlight reveal"><div class="tier-name" style="color:var(--blue);">Starter ⭐</div><div class="tier-price">990K<span class="unit">₫/th</span></div><ul class="tier-feat"><li>Lite + Giá vàng live</li><li>TV · CRM · Thu đổi</li><li>5 users · Export</li></ul></div>
+                <div class="tier-card reveal"><div class="tier-name" style="color:var(--blue-light);">Professional</div><div class="tier-price">2.49M<span class="unit">₫/th</span></div><ul class="tier-feat"><li>Starter + Multi-branch</li><li>MISA · Batch print</li><li>KPI Dashboard</li><li>15 users · 5 CH</li></ul></div>
+                <div class="tier-card reveal"><div class="tier-name" style="color:var(--green);">Enterprise</div><div class="tier-price">4.99M<span class="unit">₫+/th</span></div><ul class="tier-feat"><li>Professional + API</li><li>Unlimited · SLA 24/7</li><li>Custom integration</li><li>Custom KPI</li></ul></div>
+            </div>
+            <div class="insight-bar green-bar reveal" style="margin-top:var(--gap);">🎁 <strong>Early Adopter "Founding 50"</strong> — Giảm 40% trong 12 tháng đầu · ARPU blended 1.84M₫/th</div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE WAR MODE — CHUYỂN SANG CHẾ ĐỘ THỜI CHIẾN             -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s-warmode" style="background:#fff5f5;overflow:hidden;position:relative;">
+        <!-- Subtle red radial tint -->
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 40%,rgba(220,38,38,.07) 0%,transparent 70%);pointer-events:none;"></div>
+        <!-- Top accent bar -->
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,#dc2626 20%,#ef4444 50%,#dc2626 80%,transparent);"></div>
+
+        <div class="slide-content" style="justify-content:center;align-items:center;text-align:center;position:relative;z-index:1;padding:clamp(20px,4vw,44px);">
+            <div class="stagger" style="display:flex;flex-direction:column;align-items:center;max-width:860px;gap:clamp(10px,1.8vw,20px);">
+
+                <!-- Chip -->
+                <div class="reveal" style="display:inline-flex;align-items:center;gap:8px;padding:6px 18px;border-radius:4px;background:#fee2e2;border:1px solid rgba(220,38,38,.35);font-size:clamp(10px,1.2vw,12px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#b91c1c;">⚠️ &nbsp;THỜI CƠ · HÀNH ĐỘNG NGAY</div>
+
+                <!-- Main headline -->
+                <h2 class="reveal" style="font-size:clamp(2.2rem,7.5vw,6rem);font-weight:900;line-height:.9;letter-spacing:-.03em;color:#111827;margin:0;">
+                    Phải chuyển ngay<br>
+                    sang chế độ<br>
+                    <span style="color:#dc2626;">&ldquo;Thời Chiến&rdquo;</span>
+                </h2>
+
+                <!-- Divider -->
+                <div class="reveal" style="width:56px;height:3px;background:#dc2626;border-radius:2px;"></div>
+
+                <!-- Subtitle -->
+                <p class="reveal" style="font-size:clamp(.9rem,1.8vw,1.2rem);color:#374151;font-weight:500;line-height:1.6;max-width:600px;margin:0;">
+                    HĐĐT 2026 &amp; AML bắt buộc tạo ra <strong style="color:#b45309;font-weight:700;">áp lực tuân thủ tức thời</strong><br>
+                    cho 18.000+ tiệm vàng — cửa sổ cơ hội đang mở ngay bây giờ.
+                </p>
+
+                <!-- 3 pillars -->
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.4vw,16px);width:100%;margin-top:clamp(2px,.6vw,8px);" class="reveal stagger">
+
+                    <div style="background:#fff;border:1px solid rgba(220,38,38,.2);border-top:3px solid #dc2626;border-radius:8px;padding:clamp(10px,2vw,16px);text-align:left;">
+                        <div style="font-size:1.4rem;margin-bottom:6px;">🛠️</div>
+                        <div style="font-size:clamp(.78rem,1.5vw,1rem);font-weight:700;color:#111827;margin-bottom:5px;">R&amp;D &mdash; Dev</div>
+                        <div style="font-size:clamp(.65rem,1.1vw,.85rem);color:#6b7280;line-height:1.55;">Tăng <strong style="color:#dc2626;">130%</strong> thời gian làm việc · Full focus build sản phẩm · Không có chỗ cho làm thời vụ</div>
+                    </div>
+
+                    <div style="background:#fff;border:1px solid rgba(220,38,38,.2);border-top:3px solid #dc2626;border-radius:8px;padding:clamp(10px,2vw,16px);text-align:left;">
+                        <div style="font-size:1.4rem;margin-bottom:6px;">💸</div>
+                        <div style="font-size:clamp(.78rem,1.5vw,1rem);font-weight:700;color:#111827;margin-bottom:5px;">Capital</div>
+                        <div style="font-size:clamp(.65rem,1.1vw,.85rem);color:#6b7280;line-height:1.55;">Bắt đầu <strong style="color:#dc2626;">fund raising</strong> · Seed round · Target close trước Quý 3</div>
+                    </div>
+
+                    <div style="background:#fff;border:1px solid rgba(180,83,9,.2);border-top:3px solid #b45309;border-radius:8px;padding:clamp(10px,2vw,16px);text-align:left;">
+                        <div style="font-size:1.4rem;margin-bottom:6px;">🎯</div>
+                        <div style="font-size:clamp(.78rem,1.5vw,1rem);font-weight:700;color:#92400e;margin-bottom:5px;">Business</div>
+                        <div style="font-size:clamp(.65rem,1.1vw,.85rem);color:#6b7280;line-height:1.55;">Chốt <strong style="color:#b45309;">GTM plan trước tháng 7</strong> · Pipeline ông khách đầu tiên · Onboard Founding 50</div>
+                    </div>
+
+                </div>
+
+                <!-- Roadmap Timeline — Arrow style -->
+                <div class="reveal" style="width:100%;">
+
+                    <!-- Arrow bar -->
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:clamp(10px,1.5vw,16px);">
+
+                        <div style="position:relative;display:flex;align-items:center;">
+                            <div style="background:#dc2626;color:#fff;font-weight:800;font-size:clamp(11px,1.5vw,15px);padding:12px 10px 12px 14px;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%);width:100%;text-align:center;line-height:1.4;z-index:3;">
+                                🏗️ Tháng 7<br><span style="font-size:clamp(10px,1.2vw,13px);font-weight:600;opacity:.9;">Hoàn thành giải pháp</span>
+                            </div>
+                        </div>
+
+                        <div style="position:relative;display:flex;align-items:center;margin-left:-16px;">
+                            <div style="background:#b91c1c;color:#fff;font-weight:800;font-size:clamp(11px,1.5vw,15px);padding:12px 10px 12px 26px;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%);width:100%;text-align:center;line-height:1.4;z-index:2;">
+                                🤝 Tháng 8<br><span style="font-size:clamp(10px,1.2vw,13px);font-weight:600;opacity:.9;">Khách hàng đầu tiên</span>
+                            </div>
+                        </div>
+
+                        <div style="position:relative;display:flex;align-items:center;margin-left:-16px;">
+                            <div style="background:#b45309;color:#fff;font-weight:800;font-size:clamp(11px,1.5vw,15px);padding:12px 10px 12px 26px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,16px 50%);width:100%;text-align:center;line-height:1.4;z-index:1;">
+                                💰 Tháng 12<br><span style="font-size:clamp(10px,1.2vw,13px);font-weight:600;opacity:.9;">Gọi vốn round tiếp theo</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Detail columns -->
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(6px,1vw,12px);">
+
+                        <div style="padding:0 4px;">
+                            <div style="font-size:clamp(12px,1.4vw,15px);font-weight:800;color:#dc2626;margin-bottom:6px;">Go-Live sẵn sàng</div>
+                            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#374151;line-height:1.5;">• Full compliance HĐĐT + AML</li>
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#374151;line-height:1.5;">• Onboard trong 48h</li>
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#374151;line-height:1.5;">• GTM plan chốt xong</li>
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#dc2626;font-weight:700;line-height:1.5;">✔ Sẵn sàng bán hàng</li>
+                            </ul>
+                        </div>
+
+                        <div style="padding:0 4px;">
+                            <div style="font-size:clamp(12px,1.4vw,15px);font-weight:800;color:#b91c1c;margin-bottom:6px;">First Revenue</div>
+                            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#374151;line-height:1.5;">• Founding 50 bắt đầu</li>
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#374151;line-height:1.5;">• Pipeline tăng tốc</li>
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#374151;line-height:1.5;">• Onboard &lt;48h / khách</li>
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#b91c1c;font-weight:700;line-height:1.5;">✔ Chứng minh product-market fit</li>
+                            </ul>
+                        </div>
+
+                        <div style="padding:0 4px;">
+                            <div style="font-size:clamp(12px,1.4vw,15px);font-weight:800;color:#b45309;margin-bottom:6px;">Series A Ready</div>
+                            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;">
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#374151;line-height:1.5;">• 20–25 KH paid</li>
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#374151;line-height:1.5;">• MRR ~27M₫</li>
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#374151;line-height:1.5;">• Churn &lt;5%</li>
+                                <li style="font-size:clamp(11px,1.3vw,14px);color:#b45309;font-weight:700;line-height:1.5;">✔ Gọi vốn round tiếp theo</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6 — ROADMAP 9 THÁNG                                   -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s6">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip green reveal">Roadmap 9 Tháng — Apr → Dec 2026</span>
+                <h2 class="reveal" style="font-size:var(--h2-size);font-weight:800;line-height:1.05;margin-bottom:var(--gap);">BUILD → GTM → <span style="color:var(--green);">Scale</span></h2>
+            </div>
+
+            <!-- Timeline grid -->
+            <div class="reveal" style="width:100%;overflow-x:auto;">
+            <div style="min-width:700px;">
+
+                <!-- Month headers -->
+                <div style="display:grid;grid-template-columns:130px repeat(9,1fr);gap:2px;margin-bottom:4px;">
+                    <div></div>
+                    <div style="text-align:center;font-size:var(--label-size);font-weight:700;color:#1e3a5f;background:#eff6ff;border-radius:3px;padding:4px 2px;">T1<br><span style="font-weight:400;color:var(--muted);">Apr</span></div>
+                    <div style="text-align:center;font-size:var(--label-size);font-weight:700;color:#1e3a5f;background:#eff6ff;border-radius:3px;padding:4px 2px;">T2<br><span style="font-weight:400;color:var(--muted);">May</span></div>
+                    <div style="text-align:center;font-size:var(--label-size);font-weight:700;color:#1e3a5f;background:#eff6ff;border-radius:3px;padding:4px 2px;">T3<br><span style="font-weight:400;color:var(--muted);">Jun</span></div>
+                    <div style="text-align:center;font-size:var(--label-size);font-weight:700;color:#fff;background:#2563eb;border-radius:3px;padding:4px 2px;">T4<br><span style="font-weight:400;">Jul</span></div>
+                    <div style="text-align:center;font-size:var(--label-size);font-weight:700;color:#fff;background:#7c3aed;border-radius:3px;padding:4px 2px;">T5<br><span style="font-weight:400;">Aug</span></div>
+                    <div style="text-align:center;font-size:var(--label-size);font-weight:700;color:#fff;background:#7c3aed;border-radius:3px;padding:4px 2px;">T6<br><span style="font-weight:400;">Sep</span></div>
+                    <div style="text-align:center;font-size:var(--label-size);font-weight:700;color:#fff;background:#7c3aed;border-radius:3px;padding:4px 2px;">T7<br><span style="font-weight:400;">Oct</span></div>
+                    <div style="text-align:center;font-size:var(--label-size);font-weight:700;color:#fff;background:#7c3aed;border-radius:3px;padding:4px 2px;">T8<br><span style="font-weight:400;">Nov</span></div>
+                    <div style="text-align:center;font-size:var(--label-size);font-weight:700;color:#fff;background:#16a34a;border-radius:3px;padding:4px 2px;">T9<br><span style="font-weight:400;">Dec</span></div>
+                </div>
+
+                <!-- Phase row -->
+                <div style="display:grid;grid-template-columns:130px repeat(9,1fr);gap:2px;margin-bottom:3px;">
+                    <div style="font-size:var(--label-size);font-weight:700;color:#fff;background:#1e3a5f;border-radius:3px;padding:4px 6px;display:flex;align-items:center;">PHASE</div>
+                    <div style="background:#1e3a5f;border-radius:3px;padding:4px 2px;text-align:center;font-size:var(--label-size);font-weight:700;color:#86efac;">BUILD</div>
+                    <div style="background:#1e3a5f;border-radius:3px;padding:4px 2px;text-align:center;font-size:var(--label-size);font-weight:700;color:#86efac;">BUILD</div>
+                    <div style="background:#1e3a5f;border-radius:3px;padding:4px 2px;text-align:center;font-size:var(--label-size);font-weight:700;color:#86efac;">BUILD</div>
+                    <div style="background:#1e3a5f;border-radius:3px;padding:4px 2px;text-align:center;font-size:var(--label-size);font-weight:700;color:#86efac;">BUILD</div>
+                    <div style="background:#7c3aed;border-radius:3px;padding:4px 2px;text-align:center;font-size:var(--label-size);font-weight:700;color:#c4b5fd;">GTM</div>
+                    <div style="background:#7c3aed;border-radius:3px;padding:4px 2px;text-align:center;font-size:var(--label-size);font-weight:700;color:#c4b5fd;">GTM</div>
+                    <div style="background:#7c3aed;border-radius:3px;padding:4px 2px;text-align:center;font-size:var(--label-size);font-weight:700;color:#c4b5fd;">GTM</div>
+                    <div style="background:#7c3aed;border-radius:3px;padding:4px 2px;text-align:center;font-size:var(--label-size);font-weight:700;color:#c4b5fd;">GTM</div>
+                    <div style="background:#16a34a;border-radius:3px;padding:4px 2px;text-align:center;font-size:var(--label-size);font-weight:700;color:#bbf7d0;">SCALE</div>
+                </div>
+
+                <!-- S1: Core Product -->
+                <div style="display:grid;grid-template-columns:130px repeat(9,1fr);gap:2px;margin-bottom:2px;align-items:center;">
+                    <div style="font-size:var(--label-size);font-weight:600;color:#334155;padding:3px 6px;">🏗️ Core Product</div>
+                    <div style="background:#93c5fd;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#1e3a5f;font-weight:700;">S1.1 98%✅</div>
+                    <div style="background:#2563eb;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#fff;font-weight:700;">S1.2</div>
+                    <div style="background:#2563eb;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#fff;font-weight:700;">S2+S3</div>
+                    <div style="background:#2563eb;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#fff;font-weight:700;border:2px solid #1d4ed8;">M4✅</div>
+                    <div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div>
+                </div>
+
+                <!-- Billing -->
+                <div style="display:grid;grid-template-columns:130px repeat(9,1fr);gap:2px;margin-bottom:2px;align-items:center;">
+                    <div style="font-size:var(--label-size);font-weight:600;color:#334155;padding:3px 6px;">💳 Billing</div>
+                    <div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div>
+                    <div style="background:#d97706;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#fff;font-weight:700;">Build</div>
+                    <div style="background:#16a34a;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#fff;font-weight:700;">M5✅ 10/7</div>
+                    <div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div>
+                </div>
+
+                <!-- Sales & Marketing -->
+                <div style="display:grid;grid-template-columns:130px repeat(9,1fr);gap:2px;margin-bottom:2px;align-items:center;">
+                    <div style="font-size:var(--label-size);font-weight:600;color:#334155;padding:3px 6px;">🚀 Sales & Marketing</div>
+                    <div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div>
+                    <div style="background:#fde68a;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#92400e;font-weight:700;">1st KH</div>
+                    <div style="background:#fde68a;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#92400e;font-weight:700;">T6</div>
+                    <div style="background:#fde68a;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#92400e;font-weight:700;">10 KH</div>
+                    <div style="background:#fde68a;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#92400e;font-weight:700;">T8</div>
+                    <div style="background:#16a34a;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#fff;font-weight:700;">20-25 KH</div>
+                </div>
+
+                <!-- ESOP Milestones -->
+                <div style="display:grid;grid-template-columns:130px repeat(9,1fr);gap:2px;margin-bottom:2px;align-items:center;">
+                    <div style="font-size:var(--label-size);font-weight:600;color:#334155;padding:3px 6px;">🎯 ESOP Milestone</div>
+                    <div style="background:#16a34a;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#fff;font-weight:700;">M1<br>0.33%</div>
+                    <div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div>
+                    <div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div>
+                    <div style="background:#16a34a;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#fff;font-weight:700;">M5<br>0.33%</div>
+                    <div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div>
+                    <div style="background:#16a34a;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#fff;font-weight:700;border:2px solid #15803d;">M9<br>0.34%</div>
+                </div>
+
+                <!-- MRR row -->
+                <div style="display:grid;grid-template-columns:130px repeat(9,1fr);gap:2px;align-items:center;">
+                    <div style="font-size:var(--label-size);font-weight:600;color:#334155;padding:3px 6px;">💰 MRR target</div>
+                    <div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div><div style="background:#f1f5f9;border-radius:3px;padding:3px 2px;"></div>
+                    <div style="background:#dbeafe;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#1e40af;font-weight:700;">~20M</div>
+                    <div style="background:#dbeafe;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#1e40af;font-weight:700;">~40M</div>
+                    <div style="background:#dbeafe;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#1e40af;font-weight:700;">~70M</div>
+                    <div style="background:#dbeafe;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#1e40af;font-weight:700;">~100M</div>
+                    <div style="background:#2563eb;border-radius:3px;padding:3px 2px;text-align:center;font-size:9px;color:#fff;font-weight:700;">132M</div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 7b — TẠI SAO ESOP?                                    -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s2">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip amber reveal">Tại sao ESOP?</span>
+                <h2 class="reveal" style="font-size:var(--h2-size);font-weight:800;line-height:1.05;margin-bottom:var(--gap);">Làm thuê có trần — <span style="color:var(--green);">Làm chủ không giới hạn</span></h2>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);">
+                <!-- Pain points của nhân viên -->
+                <div style="display:flex;flex-direction:column;gap:clamp(.4rem,.8vw,.7rem);" class="stagger">
+                    <div style="font-size:var(--h3-size);font-weight:800;color:var(--red);margin-bottom:.1em;" class="reveal">❌ Mô hình làm thuê truyền thống</div>
+                    <div class="problem-item reveal"><span class="item-icon">📊</span><div class="item-text"><strong>Lương bị giới hạn bởi thị trường</strong><span>Tăng 10-15%/năm là tốt — dù bạn tạo ra giá trị gấp 10x</span></div></div>
+                    <div class="problem-item reveal"><span class="item-icon">🔄</span><div class="item-text"><strong>Công sức không tích lũy thành tài sản</strong><span>Nghỉ việc = mất hết — không có gì để lại từ năm làm việc</span></div></div>
+                    <div class="problem-item reveal"><span class="item-icon">🎯</span><div class="item-text"><strong>Thiếu động lực dài hạn</strong><span>Khi thành công của công ty không phải thành công của bạn</span></div></div>
+                </div>
+                <!-- ESOP giải quyết -->
+                <div style="display:flex;flex-direction:column;gap:clamp(.4rem,.8vw,.7rem);" class="stagger">
+                    <div style="font-size:var(--h3-size);font-weight:800;color:var(--green);margin-bottom:.1em;" class="reveal">✅ Mô hình ESOP tại Fanlabs</div>
+                    <div class="why-item reveal"><span class="item-icon">💰</span><div class="item-text"><strong>Thu nhập = Lương + Cổ phần tích lũy</strong><span>Mỗi tháng làm việc, bạn đang đồng thời xây dựng tài sản</span></div></div>
+                    <div class="why-item reveal"><span class="item-icon">📈</span><div class="item-text"><strong>Công ty lớn → Giá trị Cổ phần của bạn lớn theo</strong><span>Không có trần — upside tỷ lệ thuận với đóng góp thực tế</span></div></div>
+                    <div class="why-item reveal"><span class="item-icon">🤝</span><div class="item-text"><strong>Động lực dài hạn</strong><span>Tất cả cùng một mục tiêu chung — thành công của công ty là thành công của bạn</span></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 7c — ESOP FLOW DIAGRAM                                 -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s7c" style="display:flex;align-items:center;justify-content:center;">
+        <div class="slide-content" style="align-items:center;width:100%;max-width:1000px;padding:clamp(12px,2vw,24px);">
+            <div class="stagger" style="text-align:center;margin-bottom:clamp(6px,1vw,12px);">
+                <span class="chip amber reveal">Cơ chế hoạt động</span>
+                <h2 class="reveal" style="font-size:clamp(1.6rem,3.5vw,2.8rem);font-weight:800;line-height:1.05;margin-bottom:0;">Mỗi tháng làm việc → <span style="color:var(--green);">tự động đầu tư</span></h2>
+            </div>
+
+            <!-- HOUR FLOW DIAGRAM -->
+            <div class="reveal" style="width:100%;flex:1;">
+                <svg viewBox="0 0 820 400" preserveAspectRatio="xMidYMid meet" style="width:100%;max-height:70vh;display:block;" font-family="Be Vietnam Pro, sans-serif">
+                    <defs>
+                        <marker id="arrH" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+                            <path d="M0,0 L0,8 L10,4 z" fill="#94a3b8"/>
+                        </marker>
+                    </defs>
+
+                    <!-- TOP: Ngày làm việc -->
+                    <rect x="160" y="14" width="500" height="80" rx="14" fill="#1e3a5f"/>
+                    <text x="410" y="38" text-anchor="middle" font-size="16" font-weight="700" fill="#93c5fd">⏰ Ngày chuẩn: 8h thực tế</text>
+                    <text x="410" y="60" text-anchor="middle" font-size="15" fill="#fcd34d">+ OT 2h/ngày × rate <tspan font-weight="900" fill="#fb923c">1.5x</tspan> = quy đổi thêm 3h</text>
+                    <text x="410" y="84" text-anchor="middle" font-size="18" font-weight="900" fill="#fff">⇒ Tổng quy đổi: <tspan fill="#fbbf24">11h/ngày</tspan></text>
+
+                    <!-- Arrow down -->
+                    <line x1="340" y1="94" x2="210" y2="140" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrH)"/>
+                    <line x1="480" y1="94" x2="610" y2="140" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrH)"/>
+                    <text x="248" y="136" text-anchor="middle" font-size="16" font-weight="900" fill="#60a5fa">70% = 7.7h</text>
+                    <text x="572" y="136" text-anchor="middle" font-size="16" font-weight="900" fill="#4ade80">30% = 3.3h</text>
+
+                    <!-- LEFT: CASH box -->
+                    <rect x="40" y="148" width="330" height="110" rx="14" fill="#1e40af"/>
+                    <text x="205" y="176" text-anchor="middle" font-size="17" font-weight="800" fill="#bfdbfe">💵 7.7h → nhận CASH</text>
+                    <text x="205" y="212" text-anchor="middle" font-size="28" font-weight="900" fill="#fff">≈ 96% lương</text>
+                    <text x="205" y="242" text-anchor="middle" font-size="15" font-weight="700" fill="#93c5fd">lương hiện tại</text>
+
+                    <!-- RIGHT: ESOP box -->
+                    <rect x="450" y="148" width="330" height="110" rx="14" fill="#166534"/>
+                    <text x="615" y="176" text-anchor="middle" font-size="17" font-weight="800" fill="#bbf7d0">📈 3.3h → tích lũy ESOP</text>
+                    <text x="615" y="212" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">→ Cổ phần công ty</text>
+                    <text x="615" y="242" text-anchor="middle" font-size="13" fill="#86efac">Vest hàng tháng sau cliff 6T</text>
+
+                    <!-- PLUS SIGN -->
+                    <text x="410" y="222" text-anchor="middle" font-size="44" font-weight="900" fill="#e2e8f0">+</text>
+
+                    <!-- SUMMARY BOX -->
+                    <rect x="40" y="278" width="740" height="64" rx="14" fill="#0f172a" stroke="#16a34a" stroke-width="2"/>
+                    <text x="410" y="302" text-anchor="middle" font-size="14" fill="#4ade80">✔ Làm 8h + OT 2h (rate 1.5x) → nhận ≈ 96% lương hiện tại CASH + tự động đầu tư cổ phần</text>
+                    <text x="410" y="328" text-anchor="middle" font-size="17" font-weight="900" fill="#fcd34d">Không OT = chỉ nhận 70% lương &amp; không có ESOP ⚠️</text>
+
+                    <!-- VISUAL: Hour bar (11h total) width=740 from x=40 -->
+                    <text x="40" y="360" font-size="12" fill="#64748b">0h</text>
+                    <!-- 7.7/11 * 740 = 518; 3.3/11 * 740 = 222 -->
+                    <rect x="55" y="365" width="518" height="26" rx="6" fill="#1e40af"/>
+                    <rect x="573" y="365" width="222" height="26" rx="6" fill="#166534"/>
+                    <text x="314" y="382" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">7.7h CASH (70%)</text>
+                    <text x="682" y="382" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3.3h ESOP (30%)</text>
+                    <!-- OT at 8h: 55 + (8/11)*740 = 55+538 = 593 -->
+                    <line x1="593" y1="354" x2="593" y2="396" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4"/>
+                    <text x="593" y="350" text-anchor="middle" font-size="11" fill="#fbbf24">OT (8h)</text>
+                    <text x="790" y="382" text-anchor="middle" font-size="12" fill="#64748b">11h</text>
+
+                </svg>
+            </div>
+
+        </div>
+    </section>
+
+        <!-- ============================================================ -->
+    <!-- SLIDE 7 — ESOP                                               -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s7">
+        <div class="slide-content">
+            <div class="stagger">
+                <span class="chip green reveal">ESOP · Ownership</span>
+                <h2 class="reveal" style="font-size:var(--h2-size);font-weight:800;line-height:1.05;margin-bottom:var(--gap);">Cổ phần <span style="color:var(--green);">thực sự</span> — hợp đồng pháp lý ràng buộc</h2>
+            </div>
+            <!-- Formula summary -->
+            <div class="reveal" style="width:100%;background:rgba(22,163,74,0.07);border:1px solid rgba(22,163,74,0.25);border-radius:8px;padding:clamp(10px,1.5vw,16px);margin-bottom:var(--gap);">
+                <div style="font-size:var(--label-size);font-weight:800;color:var(--green);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">📐 Công thức ESOP Hybrid</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:var(--body-size);">
+                    <div>
+                        <div style="font-weight:700;color:#0f172a;margin-bottom:4px;">Thu nhập hàng tháng</div>
+                        <div style="color:#334155;line-height:1.7;">
+                            <strong>A</strong> = Lương cơ bản<br>
+                            <strong>B</strong> = OT · 1.5x · 1h~2h/ngày<br>
+                            → <strong style="color:#2563eb;">Cash = (A+B) × 70%</strong><br>
+                            → <strong style="color:#16a34a;">ESOP = (A+B) × 30%</strong>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-weight:700;color:#0f172a;margin-bottom:4px;">Quan trọng cần biết</div>
+                        <div style="color:#334155;line-height:1.7;">
+                            ⚠️ <strong>Không OT</strong> = chỉ nhận <strong style="color:#dc2626;">70% lương</strong><br>
+                            ✅ <strong>OT 2h/ngày</strong> = nhận ~<strong style="color:#16a34a;">96% lương + ESOP</strong><br>
+                            🎯 <strong>Milestone</strong> = 1% tổng ÷ 10 người<br>
+                            = <strong>0.1%/người = 15M equity @15B</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="esop-cols reveal">
+                <svg width="clamp(140px,18vw,180px)" height="clamp(140px,18vw,180px)" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="#e2e8f0" stroke-width="28"/>
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="#2563eb" stroke-width="28" stroke-dasharray="352 503" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="#16a34a" stroke-width="28" stroke-dasharray="54 503" stroke-dashoffset="-352" transform="rotate(-90 100 100)"/>
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="#d97706" stroke-width="28" stroke-dasharray="31 503" stroke-dashoffset="-406" transform="rotate(-90 100 100)"/>
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="#dc2626" stroke-width="28" stroke-dasharray="66 503" stroke-dashoffset="-437" transform="rotate(-90 100 100)"/>
+                    <text x="100" y="92" text-anchor="middle" font-family="Be Vietnam Pro" font-size="22" font-weight="900" fill="#0f172a">70/30</text>
+                    <text x="100" y="114" text-anchor="middle" font-family="Be Vietnam Pro" font-size="11" fill="#64748b">Cash / ESOP</text>
+                </svg>
+                <div>
+                    <div class="legend-item"><div class="legend-dot" style="background:#2563eb;"></div><div class="legend-val" style="color:#2563eb;">70%</div>(Lương + OT) → Cash hàng tháng</div>
+                    <div class="legend-item"><div class="legend-dot" style="background:#16a34a;"></div><div class="legend-val" style="color:#16a34a;">30%</div>(Lương + OT) → chuyển thành cổ phần</div>
+                    <div class="legend-item"><div class="legend-dot" style="background:#d97706;"></div><div class="legend-val" style="color:#d97706;">OT</div>1.5x rate · OT tăng → cả Cash lẫn ESOP đều tăng</div>
+                    <div class="legend-item"><div class="legend-dot" style="background:#dc2626;"></div><div class="legend-val" style="color:#dc2626;">Milestone</div>1% tổng ÷ 10 người = 15M/người khi đạt M1/M5/M9</div>
+                </div>
+            </div>
+            <div class="insight-bar green-bar reveal" style="margin-top:var(--gap);">💎 <strong>Định giá: 15 tỷ VNĐ</strong> · ESOP Pool ~1.26B (~8.39%) · Cliff 6 tháng · Vesting 18 tháng · Good Leaver giữ toàn bộ · <strong>100% Acceleration khi M&A/IPO</strong></div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 8 — ESOP vs FULL CASH (Vertical Stacked Bar Chart)     -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s8" style="display:flex;align-items:center;justify-content:center;">
+        <div class="slide-content" style="align-items:center;justify-content:center;flex:none;">
+            <div class="stagger" style="width:100%;max-width:800px;text-align:center;">
+                <span class="chip reveal">Thu nhập 9 tháng · Senior Dev 30M/th · OT 2h/ngày</span>
+                <h2 class="reveal" style="font-size:var(--h2-size);font-weight:800;line-height:1.05;margin-bottom:var(--gap);">ESOP Hybrid <span style="color:var(--green);">lợi hơn 43%</span></h2>
+            </div>
+            <!-- Vertical stacked bar chart via SVG -->
+            <!-- Scale: max=1100M, chart height=200px (y=50 to y=250), bottom y=250 -->
+            <!-- px per M = 200/1100 = 0.1818 -->
+            <!-- Full Cash 270M  → h=49px,  top=201 -->
+            <!-- ESOP @15B 421M  → h=76px,  top=174  (ESOP 232M=42px + Cash 189M=34px) -->
+            <!-- Series A  964M  → h=175px, top=75   (ESOP 775M=141px + Cash 189M=34px) -->
+            <!-- Series B  2514M → overflow, cap at y=50 with arrow (ESOP visible=166px + Cash=34px) -->
+            <div class="reveal" style="width:100%;max-width:700px;margin:0 auto;">
+                <svg viewBox="0 0 700 285" preserveAspectRatio="xMidYMid meet" style="width:100%;display:block;margin:0 auto;">
+                    <!-- Axes -->
+                    <line x1="80" y1="50" x2="80" y2="250" stroke="#e2e8f0" stroke-width="1"/>
+                    <line x1="80" y1="250" x2="660" y2="250" stroke="#e2e8f0" stroke-width="1"/>
+                    <!-- Gridlines: 200M=213, 400M=177, 600M=141, 800M=105, 1000M=68 -->
+                    <line x1="80" y1="213" x2="660" y2="213" stroke="#e2e8f0" stroke-width=".5" stroke-dasharray="4"/>
+                    <line x1="80" y1="177" x2="660" y2="177" stroke="#e2e8f0" stroke-width=".5" stroke-dasharray="4"/>
+                    <line x1="80" y1="141" x2="660" y2="141" stroke="#e2e8f0" stroke-width=".5" stroke-dasharray="4"/>
+                    <line x1="80" y1="105" x2="660" y2="105" stroke="#e2e8f0" stroke-width=".5" stroke-dasharray="4"/>
+                    <line x1="80" y1="68" x2="660" y2="68" stroke="#e2e8f0" stroke-width=".5" stroke-dasharray="4"/>
+                    <!-- Y labels -->
+                    <text x="74" y="254" text-anchor="end" font-size="10" fill="#94a3b8" font-family="Be Vietnam Pro">0</text>
+                    <text x="74" y="217" text-anchor="end" font-size="10" fill="#94a3b8" font-family="Be Vietnam Pro">200M</text>
+                    <text x="74" y="181" text-anchor="end" font-size="10" fill="#94a3b8" font-family="Be Vietnam Pro">400M</text>
+                    <text x="74" y="145" text-anchor="end" font-size="10" fill="#94a3b8" font-family="Be Vietnam Pro">600M</text>
+                    <text x="74" y="109" text-anchor="end" font-size="10" fill="#94a3b8" font-family="Be Vietnam Pro">800M</text>
+                    <text x="74" y="72" text-anchor="end" font-size="10" fill="#94a3b8" font-family="Be Vietnam Pro">1B</text>
+
+                    <!-- === BAR 1: Full Cash 270M, h=49px, top=201 === -->
+                    <rect x="110" y="201" width="85" height="49" rx="4" fill="#2563eb"/>
+                    <text x="152" y="231" text-anchor="middle" font-size="13" font-weight="800" fill="#fff" font-family="Be Vietnam Pro">270M</text>
+                    <text x="152" y="272" text-anchor="middle" font-size="12" font-weight="600" fill="#64748b" font-family="Be Vietnam Pro">Full Cash</text>
+                    <text x="152" y="192" text-anchor="middle" font-size="13" font-weight="800" fill="#0f172a" font-family="Be Vietnam Pro">270M</text>
+
+                    <!-- === BAR 2: ESOP @15B = 335M (OT 1h/ngày) ===
+                         Cash 224M → h=41px, y=209 to y=250
+                         ESOP 111M → h=20px, y=189 to y=209 -->
+                    <rect x="255" y="180" width="85" height="23" rx="0" fill="#16a34a"/>
+                    <rect x="255" y="180" width="85" height="5" rx="4" fill="#16a34a"/>
+                    <rect x="255" y="203" width="85" height="47" fill="#2563eb"/>
+                    <rect x="255" y="245" width="85" height="5" rx="0" ry="4" fill="#2563eb"/>
+                    <text x="297" y="231" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Be Vietnam Pro">260M cash</text>
+                    <text x="297" y="196" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Be Vietnam Pro">126M ESOP</text>
+                    <text x="297" y="272" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a" font-family="Be Vietnam Pro">ESOP @15B ⭐</text>
+                    <text x="297" y="171" text-anchor="middle" font-size="13" font-weight="800" fill="#16a34a" font-family="Be Vietnam Pro">386M (+43%)</text>
+
+                    <!-- === BAR 3: Series A = 594M ===
+                         ESOP 370M → h=67px, y=142 to y=209
+                         Cash 224M → h=41px, y=209 to y=250 -->
+                    <rect x="400" y="127" width="85" height="76" rx="0" fill="#16a34a" opacity=".75"/>
+                    <rect x="400" y="127" width="85" height="5" rx="4" fill="#16a34a" opacity=".75"/>
+                    <rect x="400" y="203" width="85" height="47" fill="#2563eb" opacity=".75"/>
+                    <rect x="400" y="245" width="85" height="5" rx="0" ry="4" fill="#2563eb" opacity=".75"/>
+                    <text x="442" y="231" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Be Vietnam Pro">260M</text>
+                    <text x="442" y="160" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Be Vietnam Pro">420M ESOP</text>
+                    <text x="442" y="272" text-anchor="middle" font-size="12" font-weight="600" fill="#64748b" font-family="Be Vietnam Pro">Series A · 50B</text>
+                    <text x="442" y="118" text-anchor="middle" font-size="13" font-weight="800" fill="#1d4ed8" font-family="Be Vietnam Pro">680M (+152%)</text>
+
+                    <!-- === BAR 4: Series B = 2514M → overflow, cap at y=50 ===
+                         ESOP portion visible: 166px (y=50 to y=216)
+                         Cash 189M → h=34px, y=216 to y=250
+                         Arrow at top to indicate overflow -->
+                    <rect x="545" y="50" width="85" height="153" rx="0" fill="#16a34a" opacity=".45"/>
+                    <rect x="545" y="203" width="85" height="47" fill="#2563eb" opacity=".45"/>
+                    <rect x="545" y="245" width="85" height="5" rx="0" ry="4" fill="#2563eb" opacity=".45"/>
+                    <text x="587" y="231" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Be Vietnam Pro">260M</text>
+                    <text x="587" y="122" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Be Vietnam Pro">1,26 tỷ</text>
+                    <text x="587" y="135" text-anchor="middle" font-size="9" fill="rgba(255,255,255,.8)" font-family="Be Vietnam Pro">ESOP</text>
+                    <!-- Overflow arrows -->
+                    <polygon points="587,42 581,52 593,52" fill="#16a34a" opacity=".6"/>
+                    <polygon points="587,35 581,45 593,45" fill="#16a34a" opacity=".4"/>
+                    <text x="587" y="272" text-anchor="middle" font-size="12" font-weight="600" fill="#64748b" font-family="Be Vietnam Pro">Series B · 150B</text>
+                    <text x="587" y="27" text-anchor="middle" font-size="13" font-weight="800" fill="#16a34a" font-family="Be Vietnam Pro">1,52 tỷ (+463%)</text>
+
+                    <!-- Legend -->
+                    <rect x="160" y="275" width="13" height="10" rx="2" fill="#2563eb"/>
+                    <text x="178" y="284" font-size="11" fill="#64748b" font-family="Be Vietnam Pro">Tiền mặt</text>
+                    <rect x="260" y="275" width="13" height="10" rx="2" fill="#16a34a"/>
+                    <text x="278" y="284" font-size="11" fill="#64748b" font-family="Be Vietnam Pro">Giá trị cổ phần ESOP</text>
+                </svg>
+            </div>
+            <div class="src reveal">Định giá hiện tại: 15 tỷ VNĐ · ESOP Pool: 15% · Gia nhập sớm = định giá thấp nhất</div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 9 — GROWTH CHART                                       -->
+    <!-- ============================================================ -->
+    <section class="slide" id="s9">
+        <div class="slide-content" style="align-items:center;text-align:center;">
+            <div class="stagger" style="width:100%;max-width:750px;">
+                <span class="chip green reveal">Dự Báo 5 Năm</span>
+                <h2 class="reveal" style="font-size:var(--h2-size);font-weight:800;line-height:1.05;margin:var(--egap) 0 var(--gap);">Tăng trưởng <span style="color:var(--green);">bền vững</span></h2>
+                <div class="reveal" style="width:100%;">
+                    <svg viewBox="0 0 700 240" preserveAspectRatio="xMidYMid meet" style="width:100%;">
+                        <line x1="60" y1="20" x2="60" y2="195" stroke="#e2e8f0" stroke-width="1"/>
+                        <line x1="60" y1="195" x2="670" y2="195" stroke="#e2e8f0" stroke-width="1"/>
+                        <line x1="60" y1="150" x2="670" y2="150" stroke="#e2e8f0" stroke-width=".5" stroke-dasharray="4"/>
+                        <line x1="60" y1="105" x2="670" y2="105" stroke="#e2e8f0" stroke-width=".5" stroke-dasharray="4"/>
+                        <line x1="60" y1="60" x2="670" y2="60" stroke="#e2e8f0" stroke-width=".5" stroke-dasharray="4"/>
+                        <text x="55" y="198" text-anchor="end" font-size="10" fill="#64748b" font-family="Be Vietnam Pro">0</text>
+                        <text x="55" y="153" text-anchor="end" font-size="10" fill="#64748b" font-family="Be Vietnam Pro">20 tỷ</text>
+                        <text x="55" y="108" text-anchor="end" font-size="10" fill="#64748b" font-family="Be Vietnam Pro">40 tỷ</text>
+                        <text x="55" y="63" text-anchor="end" font-size="10" fill="#64748b" font-family="Be Vietnam Pro">60 tỷ</text>
+                        <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563eb" stop-opacity=".25"/><stop offset="100%" stop-color="#2563eb" stop-opacity=".02"/></linearGradient></defs>
+                        <!--
+                          Scale max=80 tỷ (Y5 total revenue = 60.7B, profit = 36.7B)
+                          Y axis: 0=195, 20B=150, 40B=105, 60B=60, 80B=15
+                          1B = (195-15)/80 = 2.25px
+                          ARR (SaaS run-rate): 1.6, 5.4, 12.2, 27.0, 49.8
+                          Total Revenue (actual): 4.5, 12.4, 19.3, 36.7, 60.7
+                          Net Profit (incl OS):  -0.4, 2.9, 7.5, 19.4, 36.7
+                        -->
+                        <!-- ARR area fill -->
+                        <defs>
+                          <linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563eb" stop-opacity=".2"/><stop offset="100%" stop-color="#2563eb" stop-opacity=".02"/></linearGradient>
+                          <linearGradient id="tg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d97706" stop-opacity=".15"/><stop offset="100%" stop-color="#d97706" stop-opacity=".02"/></linearGradient>
+                        </defs>
+                        <!-- Total Revenue area -->
+                        <path d="M82,185 L220,167 L358,152 L496,112 L634,58 L634,195 L82,195Z" fill="url(#tg)"/>
+                        <!-- ARR line -->
+                        <polyline points="82,191 220,183 358,167 496,134 634,84" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+                        <!-- Total Revenue line -->
+                        <polyline points="82,185 220,167 358,152 496,112 634,58" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- Profit line (dashed green) — negative Y1 -->
+                        <polyline points="82,196 220,188 358,178 496,151 634,112" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 3"/>
+
+                        <!-- ARR dots + labels -->
+                        <circle cx="82" cy="191" r="4" fill="#2563eb" opacity=".7"/>
+                        <circle cx="634" cy="84" r="5" fill="#2563eb" stroke="#f8faff" stroke-width="2"/>
+                        <text x="634" y="76" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="700" font-family="Be Vietnam Pro">ARR 49,8</text>
+
+                        <!-- Total Revenue dots + labels -->
+                        <circle cx="82" cy="185" r="4" fill="#d97706"/>
+                        <text x="82" y="177" text-anchor="middle" font-size="10" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">4,5</text>
+                        <circle cx="220" cy="167" r="4" fill="#d97706"/>
+                        <text x="220" y="159" text-anchor="middle" font-size="10" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">12,4</text>
+                        <circle cx="358" cy="152" r="4" fill="#d97706"/>
+                        <text x="358" y="144" text-anchor="middle" font-size="10" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">19,3</text>
+                        <circle cx="496" cy="112" r="4" fill="#d97706"/>
+                        <text x="496" y="104" text-anchor="middle" font-size="10" fill="#d97706" font-weight="700" font-family="Be Vietnam Pro">36,7</text>
+                        <circle cx="634" cy="58" r="6" fill="#d97706" stroke="#f8faff" stroke-width="2"/>
+                        <text x="634" y="48" text-anchor="middle" font-size="12" fill="#d97706" font-weight="800" font-family="Be Vietnam Pro">60,7 tỷ</text>
+
+                        <!-- Profit dots + labels -->
+                        <circle cx="220" cy="188" r="4" fill="#16a34a"/>
+                        <text x="220" y="204" text-anchor="middle" font-size="9" fill="#16a34a" font-weight="700" font-family="Be Vietnam Pro">+2.9</text>
+                        <circle cx="358" cy="178" r="4" fill="#16a34a"/>
+                        <text x="358" y="194" text-anchor="middle" font-size="9" fill="#16a34a" font-weight="700" font-family="Be Vietnam Pro">+7.5</text>
+                        <circle cx="496" cy="151" r="4" fill="#16a34a"/>
+                        <text x="496" y="167" text-anchor="middle" font-size="9" fill="#16a34a" font-weight="700" font-family="Be Vietnam Pro">+19.4</text>
+                        <circle cx="634" cy="112" r="6" fill="#16a34a" stroke="#f8faff" stroke-width="2"/>
+                        <text x="634" y="128" text-anchor="middle" font-size="10" fill="#16a34a" font-weight="800" font-family="Be Vietnam Pro">+36.7 tỷ</text>
+
+                        <!-- Year labels -->
+                        <text x="82" y="214" text-anchor="middle" font-size="11" fill="#0f172a" font-weight="700" font-family="Be Vietnam Pro">Y1 2026</text>
+                        <text x="220" y="214" text-anchor="middle" font-size="11" fill="#0f172a" font-weight="700" font-family="Be Vietnam Pro">Y2 2027</text>
+                        <text x="358" y="214" text-anchor="middle" font-size="11" fill="#0f172a" font-weight="700" font-family="Be Vietnam Pro">Y3 2028</text>
+                        <text x="496" y="214" text-anchor="middle" font-size="11" fill="#0f172a" font-weight="700" font-family="Be Vietnam Pro">Y4 2029</text>
+                        <text x="634" y="214" text-anchor="middle" font-size="11" fill="#0f172a" font-weight="700" font-family="Be Vietnam Pro">Y5 2030</text>
+                        <!-- KH -->
+                        <text x="82" y="228" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Be Vietnam Pro">68 KH</text>
+                        <text x="220" y="228" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Be Vietnam Pro">379 KH</text>
+                        <text x="358" y="228" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Be Vietnam Pro">898 KH</text>
+                        <text x="496" y="228" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Be Vietnam Pro">2.281 KH</text>
+                        <text x="634" y="228" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Be Vietnam Pro">4.378 KH</text>
+                        <!-- Legend -->
+                        <rect x="60" y="55" width="10" height="3" rx="1" fill="#d97706"/><text x="74" y="59" font-size="9" fill="#64748b" font-family="Be Vietnam Pro">Total Revenue (SaaS+HW+OS)</text>
+                        <rect x="60" y="67" width="10" height="3" rx="1" fill="#2563eb" opacity=".7"/><text x="74" y="71" font-size="9" fill="#64748b" font-family="Be Vietnam Pro">SaaS ARR (run-rate)</text>
+                        <line x1="60" y1="81" x2="70" y2="81" stroke="#16a34a" stroke-width="2" stroke-dasharray="4 2"/><text x="74" y="85" font-size="9" fill="#64748b" font-family="Be Vietnam Pro">Lợi nhuận (incl. Outsourcing)</text>
+                    </svg>
+                </div>
+                <p class="reveal" style="margin-top:var(--gap);font-size:var(--h2-size);font-weight:900;color:var(--green);">Cùng xây dựng ERP tốt nhất cho ngành KD Kim loại quý</p>
+                <div class="src reveal">Nguồn: FORECAST-5YEAR v17 · ARPU 1.84M₫ · Churn 15% · Growth +80%/năm · Outsourcing 4B Y1 / 6B/năm Y2+ · ESOP 70/30 T4–T12/2026</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    class Deck{constructor(){this.slides=Array.from(document.querySelectorAll('.slide'));this.cur=0;this.bar=document.getElementById('progressBar');this.dots=document.getElementById('navDots');this.init()}
+    init(){this.slides.forEach((_,i)=>{const d=document.createElement('button');d.className='nav-dot'+(i===0?' active':'');d.setAttribute('aria-label','Slide '+(i+1));d.addEventListener('click',()=>this.go(i));this.dots.appendChild(d)});this.dotEls=Array.from(this.dots.querySelectorAll('.nav-dot'));
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');const i=this.slides.indexOf(e.target);if(i!==this.cur){this.cur=i;this.update(i)}}})},{threshold:.6});this.slides.forEach(s=>obs.observe(s));
+    document.addEventListener('keydown',e=>{if(['ArrowDown','ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();this.next()}if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();this.prev()}if(e.key==='Home')this.go(0);if(e.key==='End')this.go(this.slides.length-1)});
+    let y0=0;document.addEventListener('touchstart',e=>{y0=e.touches[0].clientY},{passive:true});document.addEventListener('touchend',e=>{const dy=y0-e.changedTouches[0].clientY;if(Math.abs(dy)>50)dy>0?this.next():this.prev()},{passive:true});
+    let t;document.addEventListener('wheel',e=>{e.preventDefault();clearTimeout(t);t=setTimeout(()=>e.deltaY>0?this.next():this.prev(),50)},{passive:false});
+    setTimeout(()=>this.slides[0]?.classList.add('visible'),100)}
+    next(){if(this.cur<this.slides.length-1)this.go(this.cur+1)}prev(){if(this.cur>0)this.go(this.cur-1)}
+    go(i){this.cur=i;this.slides[i].scrollIntoView({behavior:'smooth'});this.update(i)}
+    update(i){this.dotEls.forEach((d,j)=>d.classList.toggle('active',j===i));this.bar.style.width=(this.slides.length>1?i/(this.slides.length-1)*100:100)+'%'}}
+    document.addEventListener('DOMContentLoaded',()=>new Deck());
+    </script>
+</body>
+</html>
